@@ -1,0 +1,84 @@
+{% load static %}
+{%include 'layouts/menu.html'%}
+
+<body>
+
+  <!-- NAVBAR-->
+  <nav class="navbar navbar-expand-lg sticky-top py-3 shadow-sm" style="background-color: rgb(39, 150, 248) ;">
+    <div class="container">
+      <a href="{% url 'inicio'%}" class="navbar-brand">
+        <!-- Logo Image -->
+        <img href="#" src="{% static 'img/Logo.png' %}" alt="logo" width="100" height="50" alt=""
+          class="d-inline-block align-middle mr-2">
+      </a>
+      <input type="checkbox" id="check" >
+        <label for="check" class="checkbtn">
+          <i class="fa fa-bars"></i>
+        </label>
+        <ul>
+          <li><a class="" href="{% url 'inicio'%}">Inicio</a></li>
+          <li><a href="{% url 'login'%}">Ingresar </a></li>
+          <li><a href="{% url 'registrousuario'%}">Registrate </a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="position-absolute top-50 start-50 translate-middle">
+
+    <center>
+      <h3 class="indigo-text">Inicia Sesion</h3>
+      <div class="section"></div>
+
+      <div class="container">
+        <div class="z-depth-1 grey lighten-4 row"
+          style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+          <form class="col s12" method="post">
+            {% csrf_token %}
+            <div class='row '>
+              <div class='col s12'>
+              </div>
+            </div>
+            <!--input_email-->
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input class='validate' type='email' name='email' id='email' />
+                <label for='email'>Ingresa tu dirección de correo electrónico</label>
+              </div>
+            </div>
+            <!--input_contraseña-->
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input class='validate' type='password' name='password' id='password' />
+                <label for='password'>Ingresa tu contraseña</label>
+              </div>
+              <label style='float: right;'>
+                <!--olvidar_contraseña-->
+                <a class='blue-text' href='#!'><b>¿Olvidaste tu Contraseña?</b></a>
+              </label>
+            </div>
+            <br />
+            <center>
+              <div class='row'>
+                <button type='submit' name='btn_login'
+                  class='col s12 btn btn-XS waves-effect indigo text-white'>Ingresar</button>
+              </div>
+            </center>
+          </form>
+        </div>
+      </div>
+      <!--ir_a_registro-->
+      <a class='blue-text' href="{% url 'registrousuario'%}">¿No tienes una cuenta? ¡Regístrate!</a><br>
+      <!--ir_a_index-->
+      <a class='blue-text' href="{% url 'inicio'%}">Regresar</a>
+    </center>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,234 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'js/jquery.min.js' %}">
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>
+  
+  <!--Bootstrap 5.2-->
+  <link rel="icon" href='{% static "img/Logo.png" %}' alt="fav_icon">
+  <title>EasyParking</title>
+</head>
+<body>
+  <!-- NAVBAR-->
+  <nav class="navbar navbar-expand-lg sticky-top py-3 shadow-sm mb-5" style="background-color: rgb(39, 150, 248) ;">
+    <div class="container">
+      <a href="#" class="navbar-brand">
+        <!-- Logo Image -->
+        <img href="#" src="{% static 'img/Logo.png' %}" alt="logo" width="75" height="45" alt=""
+          class="d-inline-block align-middle mr-2">
+      </a>
+      <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+          <i class="fa fa-bars"></i>
+        </label>
+        <ul>
+          {% if request.user is not None and request.user.is_authenticated %}
+          <li><a href="#somos">¿Que somos? </a></li>
+          <li><a href="#funciona">¿Como funciona? </a></li>
+          <li><a href="{% url 'registroparqueadero'%}">Registrar un parqueadero </a></li>
+          <li><a href="#">{{user.nombre_usu}}</a> </li>
+          <li><a href="{% url 'logout' %}">Salir</a></li>
+
+          {% else %}
+          <li><a class="" href="{% url 'login'%}">Ingresar</a></li>
+          <li><a href="#somos">¿Que somos? </a></li>
+          <li><a href="#funciona">¿Como funciona? </a></li>
+          <li><a href="{% url 'registrousuario'%}">Registrate</a></li>
+
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="container-fluid">
+    <div class="row"><BR></BR>
+      <div class="text-center"><h1 style="font-family:fantasy ;">BIENVENIDO A EASYPARKING</h1></div>
+
+      <!--card_encuentra_park-->
+      <div class="zona1">
+        <div class="card">
+          <div class="card2">
+            <div id="Lugares" class="text-center">
+              <p id="tittle_park">ENCUENTRA UN PARQUEADERO</p> <br>
+              <!--El selector de municipio-->
+              <select class="form-control text-center" style="font-family:arial;" name="" id="comuna_seleccionada">
+                <option value="" disabled selected>Seleccione una comuna de Medellín</option>
+                {% for comuna in comunas_list %}
+                <option value="{{comuna.id}}">{{comuna.nombre_comu}}</option>
+                {% endfor %}
+              </select>
+              {% if request.user is not None and request.user.is_authenticated %}
+              <button class="btn btn-info" onclick="CargarBuscarParqueadero()">Buscar</button>
+              {% else %}
+              <a class="btn btn-info" href="login.html">Buscar</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <section class="w-50 mx-auto text-center contenido" id="video">
+        <h1 class="p-3 fs-2 border-top border-3">Elige el mejor parqueadero para ti en la ciudad de Medellin
+        </h1>
+        <video autoplay loop muted width="100%">
+          <source src="{% static 'img/video.mp4'%}" type= "video/mp4">
+        </video>
+        </section> 
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <!--¿Qué somos?-->
+        <section class="w-50 mx-auto text-center contenido" id="somos">
+          <h1 class="p-3 fs-2 border-top border-3">¿Qué somos?</h1>
+          <p class="sub_texto"><span>Una aplicación para encontrar tu parqueadero, facil, seguro y confiable. </span></p>
+          <!--imagen somos-->
+          <figure class="somos__img somos__img--center">
+            <img src="{% static 'img/que_somos.jpg' %}" width="100%" class="somos__picture" />
+          </figure>
+        </section>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!--¿Cómo funciona?-->
+        <section class="w-50 mx-auto text-center contenido" id="funciona">
+          <h2 class="p-3 fs-2 border-top border-3">¿Cómo funciona?</h2>
+          <p class="sub_texto">Elige entre diferentes parqueaderos privados de la ciudad, reserva por minutos, horas, días o semanas facil
+            y
+            seguro.</p>
+          <!--imagen tuercas-->
+          <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+              <li data-target="#myCarousel" data-slide-to="1"></li>
+              <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+          
+            <!-- Wrapper for slides -->
+            <div id="carouselExampleIndicators" class="carousel slide">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item active d-item">
+                  <img src="{% static 'img/img1.png' %}" class="d-block w-100" alt="slider1">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'img/img1.jpg' %}" class="d-block w-100" alt="slider2">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'img/img1.jpg' %}" class="d-block w-100" alt="slider3">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+        </section>
+
+        <!-- logo wpp -->
+        <a href="https://web.whatsapp.com"><img id="logo_wpp" src="{% static 'img/wpp.png' %}" alt="Logo Whatsapp"></a>
+      </div>
+    </div>
+  </div>
+ <section>
+  <p></p>
+ </section>
+
+  <!-- footer -->
+  <footer class="footer_area section_padding_130_0">
+    <div class="container">
+      <div class="row">
+        <!-- Single Widget-->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="single-footer-widget section_padding_0_130">
+            <!-- Footer Logo-->
+            <div class="footer-logo mb-3"></div>
+            <p>La mejor página que existe para encontrar tu parqueadero.</p>
+            <!-- Copywrite Text-->
+            <div class="copywrite-text mb-5">
+              <p class="mb-0"><i class="lni-heart mr-1"></i><a class="ml-1"></a></p> <br><br>
+              <p>Jose Luis Suarez Muñoz <br>Yuner Mateo Amariles Osorio <br>Rosemberg Leandro Gomez</p>
+            </div>
+            <!-- Footer Social Area-->
+            <div></div>
+          </div>
+        </div>
+        <!-- Single Widget-->
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="single-footer-widget section_padding_0_130">
+            <!-- Widget Title-->
+            <h5 class="widget-title">Acerca</h5>
+            <!-- Footer Menu-->
+            <div class="footer_menu">
+              <ul>
+                <li><a href="#">Políticas</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Single Widget-->
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="single-footer-widget section_padding_0_130">
+            <!-- Widget Title-->
+            <h5 class="widget-title">Soporte</h5>
+            <!-- Footer Menu-->
+            <div class="footer_menu">
+              <ul>
+                <li><a href="#">contactame.easypark@gmail.com</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Single Widget-->
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="single-footer-widget section_padding_0_130">
+            <!-- Widget Title-->
+            <h5 class="widget-title">Contactanos</h5>
+            <!-- Footer Menu-->
+            <div class="footer_menu">
+              <ul>
+                <li><a href="#">Términos &amp; Condiciones</a></li>
+                <li><a href="#">Centro de Ayuda</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+<script>
+  function CargarBuscarParqueadero(){
+    let id_comuna_select = document.querySelector('#comuna_seleccionada').selectedIndex;
+    window.location.href = "{% url 'buscar'%}?comuna=" + id_comuna_select;
+  }
+</script>
+</body>
+
+</html>

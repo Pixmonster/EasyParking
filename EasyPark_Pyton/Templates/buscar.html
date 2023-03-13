@@ -1,0 +1,155 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyPark</title>
+
+  <!-- Bootstrap CSS v5.2.0-beta1 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="icon" href="{% static 'img/Logo.png' %}" alt="logo icono">
+  <link rel="icon" href="{% static 'img/Logo.png' %}" alt="fav_icon">
+  <link rel="stylesheet" href="{% static 'css/buscar.css' %}">
+
+  <!--ENLACE GOOGLE MAPS-->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script src="{% static 'js/localizacion.js' %}"></script>
+</head>
+
+<body>
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-lg sticky-top py-3 shadow-sm" style="background-color: rgb(39, 150, 248) ;">
+    <div class="container">
+      <a href="{% url 'inicio'%}" class="navbar-brand">
+        <!-- Logo Image -->
+        <img href="#" src="{% static 'img/Logo.png' %}" alt="logo" width="100" height="50" alt=""
+          class="d-inline-block align-middle mr-2">
+      </a>
+      <input type="checkbox" id="check">
+      <label for="check" class="checkbtn">
+        <i class="fa fa-bars"></i>
+      </label>
+      <ul>
+        <li><a class="" href="{% url 'inicio' %}">Inicio</a></li>
+        <li class="nav-item dropdown">
+          <select id="comuna_seleccionada" class="form-select" aria-label="Default select example"
+            onchange="CargarBuscarParqueadero(this)">
+            {% for comuna in comunas_list %}
+            {% if comuna.id == comuna_id %}
+            <option selected value="{{comuna.id}}">{{comuna.nombre_comu}}</option>
+            {% else %}
+            <option value="{{comuna.id}}">{{comuna.nombre_comu}}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </li>
+        <!-- <li><button onclick="clear()" href="#" class="btn btn-warning">Limpiar Mapa</button></li> -->
+      </ul>
+    </div>
+    </div>
+
+  </nav>
+
+  <main>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-3 bg-secondary text-left">
+          {% for parqueadero in parqueaderos %}
+          <div class="card w-100">
+            <div class="card-body">
+              <h4 class="card-title">{{parqueadero.nombre_park}}</h4>
+              <a href="#" style="color: gray;"
+                onclick="MostrarMarcador('{{parqueadero.longitud}}', '{{parqueadero.latitud}}', '{{parqueadero.nombre_park}}', '{{parqueadero.tel_park}}')">{{parqueadero.direccion}}</a>
+              </br>
+              </br>
+              <a href="{% url 'reservapark' %}" class="btn btn-outline-success">Reserva</a>
+              <a href="{% url 'calificacion' %}" class="btn btn-outline-warning">Calificar</a>
+              <a href="https://www.google.com/maps/dir//{{parqueadero.latitud}},{{parqueadero.longitud}}/@{{parqueadero.latitud}},{{parqueadero.longitud}},17z"
+                target="_blank" class="btn btn-outline-primary"> Ir </a>
+              {% if user.id == parqueadero.id_usuario_fk_id %}
+              <a href="{% url 'actualizarparqueadero'%}?id={{parqueadero.id}}" class="btn btn-outline-warning">Editar</a>
+              <buttom onclick="BorrarParqueadero('{{parqueadero.nombre_park}}', '{{parqueadero.id}}');" class="btn btn-outline-danger">Eliminar</buttom>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="col-9 bg-secondary">
+        </div>
+
+        <div id="map">
+          <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBX3DeJfi8RXiCYdZYipOLHjakBs8KM02w&callback=initMap">
+            </script>
+        </div>
+      </div>
+      <!-- <div id="map2" style="width: 320px; height: 480px;"></div> -->
+      <!-- <div>
+        <input id="address" type="textbox" value="Sydney, NSW">
+        <input type="button" value="Encode" onclick="codeAddress()">
+      </div> -->
+
+    </div>
+  </main>
+
+  <script>
+    let geocoder;
+    let mapa;
+    function initMap() {
+      const ubicacion = new Localizacion(() => {
+        const options = {
+          center: { lat: 6.2464467, lng: -75.5656252 },
+          zoom: 13
+        }
+        var map = document.getElementById('map');
+        mapa = new google.maps.Map(map, options);
+      })
+    }
+
+    function initialize() {
+      geocoder = new google.maps.Geocoder();
+    }
+
+    function MostrarMarcador(longitud, latitud, nombrepark, telefpark) {
+      mapa.setCenter({ "lng": parseFloat(longitud), "lat": parseFloat(latitud) });
+      var marker = new google.maps.Marker({
+        map: mapa,
+        position: { "lng": parseFloat(longitud), "lat": parseFloat(latitud) }
+      });
+
+      var texto = '<h4>' + nombrepark + '</h4>' + 'Teléfono: ' + telefpark;
+      var informacion = new google.maps.InfoWindow({
+        content: texto
+      });
+
+      marker.addListener('click', function () {
+        informacion.open(mapa, marker);
+      });
+    }
+    function CargarBuscarParqueadero(tag) {
+      let id_comuna_select = tag[tag.selectedIndex].value;
+      window.location.href = "{% url 'buscar'%}?comuna=" + id_comuna_select;
+    }
+    function clear() {
+      marker.setMap(null);
+    }
+
+    function BorrarParqueadero(nombre, id){
+      var resp = confirm("Seguro desea borrar el parqueadero: " + nombre)
+      if (resp) {
+        let id_comuna_select = document.querySelector('#comuna_seleccionada').options[document.querySelector('#comuna_seleccionada').selectedIndex].value;
+        window.location.href="{% url 'delete_park'%}?id=" + id + "&comuna=" + id_comuna_select;
+      }
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+body {
+    min-height: 100vh;
+    background: linear-gradient(70deg, #e6e6e6, #f7f7f7);
+    color: #514B64
+}
+
+code {
+    padding: .2rem;
+    margin: 0 .3rem;
+    background: #fff;
+    border-radius: .2rem
+}
+
+.contenido {
+    padding-top: 75px
+}
+
+.zona1 {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+
+}
+
+.card {
+    position: absolute;
+    width: 40%;
+    height: 40vh;
+    top: 150px;
+    border-radius: 20px;
+    background-image: linear-gradient(163deg, #fff 0%, #0073ff 100%);
+    transition: all .3s;
+    margin: auto
+}
+
+.card2 {
+    border-radius: 20px;
+    width: 100%;
+    height: 40vh;
+    left: 25%;
+    background-color: #1e1e1e;
+    transition: all .2s
+}
+
+.card2:hover {
+    transform: scale(0.94)
+}
+
+.card:hover {
+    box-shadow: 0 0 30px 1px rgba(255, 255, 255, 0.3)
+}
+
+#Lugares {
+    top: 15%;
+    left: 20%;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 2.5rem;
+    color: #fff
+}
+
+.nav-link {
+    padding: 8px 12px;
+    border-radius: 3px
+}
+
+.nav-link:hover {
+    background-color: #034574;
+    transform: .5px
+}
+
+#logo_wpp {
+    position: fixed;
+    width: 70px;
+    height: 70px;
+    left: 92%;
+    top: 85%
+}
+
+#footer.col {
+    background: #0073ff
+}
+
+.sub_texto {
+    font-size: 1.5rem;
+}
+
+@font-face {
+    font-family: "MandalaVintage";
+    src: url("fonts/MandalaVintage.otf");
+  }
+  body {
+    font-family: "MandalaVintage", sans-serif;
+  }
+
+@media (max-width:768px) {
+    .card {
+        width: 70%
+    }
+
+    #somos {
+        width: 200px !important
+    }
+
+    #funciona {
+        width: 200px !important
+    }
+}

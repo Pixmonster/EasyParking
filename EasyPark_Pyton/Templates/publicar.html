@@ -1,0 +1,191 @@
+{% load static %}
+{%include 'layouts/menu.html'%}
+
+<body>
+  <section>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg sticky-top py-3 shadow-sm mb-5" style="background-color: rgb(39, 150, 248) ;">
+      <div class="container">
+        <a href="{% url 'inicio'%}" class="navbar-brand">
+          <!-- Logo Image -->
+          <img href="#" src="{% static 'img/Logo.png' %}" alt="logo" width="100" height="50" alt=""
+            class="d-inline-block align-middle mr-2">
+        </a>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+          <i class="fa fa-bars"></i>
+        </label>
+        <ul>
+          <li><a class="" href="{% url 'inicio'%}">Inicio</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div>
+
+      <div class="container mx-auto">
+        <center>
+          <h3 class="indigo-text">Registrar Parqueadero</h3>
+          <br></br>
+        </center>
+        <div class="row">
+
+          <form action="" class="col s12" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!--ingresar_nombre_park-->
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="Nombre_park" type="text" class="validate" name="nombre_park">
+                <label for="nombre_park">Ingrese el nombre del parqueadero</label>
+              </div>
+              <!--ingresar_direccion-->
+              <!--ingresar_tel-->
+              <div class="input-field col s6">
+                <input id="tel" type="text" class="validate" name="tel_park">
+                <label for="tel">Ingrese el telefono</label>
+              </div>
+            </div>
+
+            <!--ingresar_precio_hora-->
+            <div class="row">
+              <div class="input-field col s4">
+                <input id="precio_h" type="number" class="validate" name="precio_hora">
+                <label for="precio_h">Precio por Hora</label>
+              </div>
+              <!--ingresa_precio_día-->
+              <div class="input-field col s4">
+                <input id="precio_d" type="number" class="validate" name="precio_dia">
+                <label for="precio_d">Precio por Día</label>
+              </div>
+              <!--ingresa_precio_mes-->
+              <div class="input-field col s4">
+                <input id="precio_m" type="number" class="validate" name="precio_mes">
+                <label for="precio_m">Precio por Mes</label>
+              </div>
+            </div>
+            <!--tipo_veh-->
+            <br></br>
+            <!--Cargar_fotos-->
+            <div class="row">
+              <div class="file-field input-field">
+                <div class="btn waves-effect indigo text-white">
+                  <span>Cargar</span>
+                  <input type="file" accept="image/*" name="imagen_park">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" placeholder="sube una foto del parqueadero">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="direccion" type="text" class="validate" name="direccion">
+                <label for="direccion">Ingrese la dirección</label>
+                <input id="latitud" type="hidden" value="" name="latitud">
+                <input id="longitud" type="hidden" value="" name="longitud">
+                <input id="long_name" type="hidden" value="" name="long_name">
+                <button id="buscar" type='button' name='btn_login'
+                  class='btn waves-effect indigo text-white'>Buscar</button>
+                <button id="limpiar" type='button' name='btn_login'
+                  class='btn waves-effect indigo text-white'>Limpiar</button>
+              </div>
+            </div>
+            <div>
+              <div class="row">
+                <div id="map" style="height: 50vh; width: 83vw;">
+                </div>
+              </div>
+              <!--boton_registro-->
+              <div id="boton_reg">
+                <div class='row'>
+                  {% if user is not None and user.is_authenticated %}
+                  <input type="hidden" value="{{user.id}}" />
+                  {% endif %}
+                  <button type='submit' name='btn_login'
+                    class='col s12 btn-large waves-effect indigo text-white'>Publicar Parqueadero</button>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+      <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNfua_IMvLoK8L5gQy0k7mlhqCiTtoSc4&callback=initMap&v=weekly"
+        defer></script>
+      <script>
+        /**
+ * @license
+ * Copyright 2019 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+        // @ts-nocheck TODO remove when fixed
+        let map;
+        let marker;
+        let geocoder;
+
+        function initMap() {
+          map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 11.28,
+            center: { lat: 6.2476376, lng: -75.56581530000001 },
+            mapTypeControl: true,
+          });
+          geocoder = new google.maps.Geocoder();
+          marker = new google.maps.Marker({
+            map,
+          });
+          map.addListener("click", (e) => {
+            geocode({ location: e.latLng });
+          });
+          document.getElementById('buscar').addEventListener("click", () =>
+            geocode({ address: document.getElementById('direccion').value })
+          );
+          document.getElementById('limpiar').addEventListener("click", () => {
+            clear();
+          });
+          clear();
+        }
+
+        function clear() {
+          marker.setMap(null);
+        }
+
+        function geocode(request) {
+          clear();
+          geocoder
+            .geocode(request)
+            .then((result) => {
+              const { results } = result;
+
+              map.setCenter(results[0].geometry.location);
+              marker.setPosition(results[0].geometry.location);
+              marker.setMap(map);
+              document.getElementById('longitud').value = results[0].geometry.location.lng();
+              document.getElementById('latitud').value = results[0].geometry.location.lat();
+
+              results[0].address_components.forEach((item, index) => {
+                let actualLongName = document.getElementById('long_name').value;
+                actualLongName = actualLongName + "|" + item.long_name;
+                document.getElementById('long_name').value = actualLongName;
+              });
+
+
+              document.getElementById('direccion').value = results[0].formatted_address;
+              document.getElementById('direccion').focus();
+              return results;
+            })
+            .catch((e) => {
+              alert("Lugar no encontrado, por favor revisa la direccion ingresada");
+            });
+        }
+
+        window.initMap = initMap;
+
+      </script>
+
+    </div>
+  </section>
+</body>
+
+</html>
