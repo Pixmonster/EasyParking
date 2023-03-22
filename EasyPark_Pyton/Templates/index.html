@@ -20,7 +20,7 @@
 </head>
 <body>
   <!-- NAVBAR-->
-  <nav class="navbar navbar-expand-lg sticky-top py-3 shadow-sm mb-5" style="background-color: rgb(39, 150, 248) ;">
+  <nav class="navbar navbar-expand-lg sticky-top py-3 initial-color">
     <div class="container">
       <a href="#" class="navbar-brand">
         <!-- Logo Image -->
@@ -40,9 +40,9 @@
           <li><a href="{% url 'logout' %}">Salir</a></li>
 
           {% else %}
-          <li><a class="" href="{% url 'login'%}">Ingresar</a></li>
           <li><a href="#somos">¿Que somos? </a></li>
           <li><a href="#funciona">¿Como funciona? </a></li>
+          <li><a class="" href="{% url 'login'%}">Ingresar</a></li>
           <li><a href="{% url 'registrousuario'%}">Registrate</a></li>
 
           {% endif %}
@@ -51,12 +51,15 @@
     </div>
   </nav>
   
-  <div class="container-fluid">
-    <div class="row"><BR></BR>
-      <div class="text-center"><h1 style="font-family:fantasy ;">BIENVENIDO A EASYPARKING</h1></div>
+  <div id="fondo-part1" class="container-fluid p-5">
+    <div class="row">
+      <div class="text-center">
+        <h1 style="font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;">¿Parqueadero en Medellín? <br> Nosotros te ayudamos y disfruta tu nuevo tiempo libre
+        </h1>
+      </div>
 
       <!--card_encuentra_park-->
-      <div class="zona1">
+      <div class="zona1 ">
         <div class="card">
           <div class="card2">
             <div id="Lugares" class="text-center">
@@ -79,11 +82,10 @@
       </div>
     </div>
   </div>
-
   <div class="container-fluid">
-    <div class="row">
+    <div id= "section-1" class="row contenido">
       <div class="col">
-        <section class="w-50 mx-auto text-center contenido" id="video">
+        <section class="w-50 mx-auto text-center " id="video">
         <h1 class="p-3 fs-2 border-top border-3">Elige el mejor parqueadero para ti en la ciudad de Medellin
         </h1>
         <video autoplay loop muted width="100%">
@@ -93,7 +95,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div id="section-2" class="row">
       <div class="col">
         <!--¿Qué somos?-->
         <section class="w-50 mx-auto text-center contenido" id="somos">
@@ -106,7 +108,8 @@
         </section>
       </div>
     </div>
-    <div class="row">
+
+    <div id="section-3" class="row">
       <div class="col">
         <!--¿Cómo funciona?-->
         <section class="w-50 mx-auto text-center contenido" id="funciona">
@@ -157,8 +160,9 @@
       </div>
     </div>
   </div>
+
  <section>
-  <p></p>
+  <br></br><br></br>
  </section>
 
   <!-- footer -->
@@ -223,6 +227,7 @@
       </div>
     </div>
   </footer>
+<script src="{% static 'js/navbar.js' %}"></script>
 <script>
   function CargarBuscarParqueadero(){
     let id_comuna_select = document.querySelector('#comuna_seleccionada').selectedIndex;
