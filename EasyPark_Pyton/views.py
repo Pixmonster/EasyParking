@@ -71,6 +71,8 @@ def registrousuario(request):
             return render(request,'registro.html')
     else:
         return render(request,'registro.html')
+    
+
 
 #El el archivo base lo deje asi para redireccionar al html del listado de usuarios 
 def listadousuarios(request):
@@ -88,10 +90,11 @@ def borrarusuario(request,id):
     usuario.delete()
     return redirect("/Usuarios/listado/")
 
-def actualizarusuario(request,id):
+def actualizarusuario(request):
+    id = request.user.id
     if request.method=="POST":
-        if request.POST.get('nombre_usu') and request.POST.get('apellido') and request.POST.get('cedula') and request.POST.get('email_usu') and request.POST.get('tel_usu') and request.POST.get('contrasenna') and request.POST.get('id_rol'):
-            usuario= Usuario()
+        if request.POST.get('nombre_usu') and request.POST.get('apellido') and request.POST.get('cedula') and request.POST.get('email_usu') and request.POST.get('tel_usu') and request.POST.get('contrasenna'):
+            usuario= Usuario.objects.filter(id=id).first()
             usuario.nombre_usu= request.POST.get('nombre_usu') 
             usuario.apellido= request.POST.get('apellido')
             usuario.cedula= request.POST.get('cedula')  
@@ -99,13 +102,16 @@ def actualizarusuario(request,id):
             usuario.tel_usu= request.POST.get('tel_usu')  
             usuario.contrasenna= request.POST.get('contrasenna') 
             usuario.id_rol= request.POST.get('id_rol')
-            actualizar=connection.cursor()
+            usuario.save()
+            #actualizar=connection.cursor()
             id=str(id)
-            actualizar.execute("call actualizausuario('"+usuario.nombre_usu+"','"+usuario.apellido+"','"+usuario.cedula+"','"+usuario.email_usu+"','"+usuario.tel_usu+"','"+usuario.contrasenna+"','"+usuario.id_rol+"')")
-            return redirect('/Usuarios/listado/')
+            #actualizar.execute("call actualizausuario('"+usuario.nombre_usu+"','"+usuario.apellido+"','"+usuario.cedula+"','"+usuario.email_usu+"','"+usuario.tel_usu+"','"+usuario.contrasenna+"')")
+            return redirect('inicio')
+        else:
+            return redirect('inicio')
     else:
-        unsolousuario=Usuario.objects.filter(id=id)
-        return render(request,'Usuarios/actualizar.html',{'unsolousuario':unsolousuario})
+        unsolousuario=Usuario.objects.filter(id=id).first()
+        return render(request,'actualizarusuario.html',{'unsolousuario':unsolousuario})
     #endregion
 
 #region parqueadero

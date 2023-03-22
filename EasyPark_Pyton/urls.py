@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from EasyPark_Pyton.views import reservaparqueadero,actualizarparqueadero, borrarparqueadero, inicio,buscar,fnLogin,fnLogout, registrousuario, registroparqueadero,reservaparqueadero, MapView,calificacion
+from EasyPark_Pyton.views import reservaparqueadero,actualizarparqueadero, borrarparqueadero, inicio,buscar,fnLogin,fnLogout, registrousuario, registroparqueadero,reservaparqueadero, MapView,calificacion, actualizarusuario
 # actualizarusuario,Listadousuarios,Borrarusuariopublicar
 
 
@@ -32,5 +32,6 @@ urlpatterns = [
     path('inicio', fnLogout, name='logout'),
     path('map.html', MapView, name='map'),
     path('actualizar_parqueadero.html', actualizarparqueadero, name='actualizarparqueadero'),
-    path('calificacion.html/', calificacion, name='calificacion')
+    path('calificacion.html/', calificacion, name='calificacion'),
+    path('actualizarusuario.html/', actualizarusuario, name ='actualizarusuario')
 ]

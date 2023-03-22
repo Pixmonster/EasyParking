@@ -13,11 +13,12 @@
   <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
   <link rel="stylesheet" href="{% static 'js/jquery.min.js' %}">
   <script src="{% static 'js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>
-  
+
   <!--Bootstrap 5.2-->
   <link rel="icon" href='{% static "img/Logo.png" %}' alt="fav_icon">
   <title>EasyParking</title>
 </head>
+
 <body>
   <!-- NAVBAR-->
   <nav class="navbar navbar-expand-lg sticky-top py-3 initial-color">
@@ -28,33 +29,47 @@
           class="d-inline-block align-middle mr-2">
       </a>
       <input type="checkbox" id="check">
-        <label for="check" class="checkbtn">
-          <i class="fa fa-bars"></i>
-        </label>
-        <ul>
-          {% if request.user is not None and request.user.is_authenticated %}
-          <li><a href="#somos">¿Que somos? </a></li>
-          <li><a href="#funciona">¿Como funciona? </a></li>
-          <li><a href="{% url 'registroparqueadero'%}">Registrar un parqueadero </a></li>
-          <li><a href="#">{{user.nombre_usu}}</a> </li>
-          <li><a href="{% url 'logout' %}">Salir</a></li>
+      <label for="check" class="checkbtn">
+        <i class="fa fa-bars"></i>
+      </label>
+      <ul>
+        {% if request.user is not None and request.user.is_authenticated %}
+        <li><a href="#somos">¿Que somos? </a></li>
+        <li><a href="#funciona">¿Como funciona? </a></li>
+        <li><a href="{% url 'registroparqueadero'%}">Registrar un parqueadero </a></li>
 
-          {% else %}
-          <li><a href="#somos">¿Que somos? </a></li>
-          <li><a href="#funciona">¿Como funciona? </a></li>
-          <li><a class="" href="{% url 'login'%}">Ingresar</a></li>
-          <li><a href="{% url 'registrousuario'%}">Registrate</a></li>
+        <li>
+          <div class="dropdown">
+            <a class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              {{user.nombre_usu}}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="{% url 'actualizarusuario'%}">Editar perfil </a></li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">Salir</a></li>
+            </ul>
+          </div>
+        </li>
 
-          {% endif %}
-        </ul>
-      </div>
+
+        {% else %}
+        <li><a href="#somos">¿Que somos? </a></li>
+        <li><a href="#funciona">¿Como funciona? </a></li>
+        <li><a class="" href="{% url 'login'%}">Ingresar</a></li>
+        <li><a href="{% url 'registrousuario'%}">Registrate</a></li>
+
+        {% endif %}
+      </ul>
+    </div>
     </div>
   </nav>
-  
+
   <div id="fondo-part1" class="container-fluid p-5">
     <div class="row">
       <div class="text-center">
-        <h1 style="font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;">¿Parqueadero en Medellín? <br> Nosotros te ayudamos y disfruta tu nuevo tiempo libre
+        <h1
+          style="font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;">
+          ¿Parqueadero en Medellín? <br> Nosotros te ayudamos y disfruta tu nuevo tiempo libre
         </h1>
       </div>
 
@@ -83,15 +98,15 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div id= "section-1" class="row contenido">
+    <div id="section-1" class="row contenido">
       <div class="col">
         <section class="w-50 mx-auto text-center " id="video">
-        <h1 class="p-3 fs-2 border-top border-3">Elige el mejor parqueadero para ti en la ciudad de Medellin
-        </h1>
-        <video autoplay loop muted width="100%">
-          <source src="{% static 'img/video.mp4'%}" type= "video/mp4">
-        </video>
-        </section> 
+          <h1 class="p-3 fs-2 border-top border-3">Elige el mejor parqueadero para ti en la ciudad de Medellin
+          </h1>
+          <video autoplay loop muted width="100%">
+            <source src="{% static 'img/video.mp4'%}" type="video/mp4">
+          </video>
+        </section>
       </div>
     </div>
 
@@ -100,7 +115,8 @@
         <!--¿Qué somos?-->
         <section class="w-50 mx-auto text-center contenido" id="somos">
           <h1 class="p-3 fs-2 border-top border-3">¿Qué somos?</h1>
-          <p class="sub_texto"><span>Una aplicación para encontrar tu parqueadero, facil, seguro y confiable. </span></p>
+          <p class="sub_texto"><span>Una aplicación para encontrar tu parqueadero, facil, seguro y confiable. </span>
+          </p>
           <!--imagen somos-->
           <figure class="somos__img somos__img--center">
             <img src="{% static 'img/que_somos.jpg' %}" width="100%" class="somos__picture" />
@@ -114,7 +130,8 @@
         <!--¿Cómo funciona?-->
         <section class="w-50 mx-auto text-center contenido" id="funciona">
           <h2 class="p-3 fs-2 border-top border-3">¿Cómo funciona?</h2>
-          <p class="sub_texto">Elige entre diferentes parqueaderos privados de la ciudad, reserva por minutos, horas, días o semanas facil
+          <p class="sub_texto">Elige entre diferentes parqueaderos privados de la ciudad, reserva por minutos, horas,
+            días o semanas facil
             y
             seguro.</p>
           <!--imagen tuercas-->
@@ -125,13 +142,16 @@
               <li data-target="#myCarousel" data-slide-to="1"></li>
               <li data-target="#myCarousel" data-slide-to="2"></li>
             </ol>
-          
+
             <!-- Wrapper for slides -->
             <div id="carouselExampleIndicators" class="carousel slide">
               <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                  aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                  aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                  aria-label="Slide 3"></button>
               </div>
               <div class="carousel-inner">
                 <div class="carousel-item active d-item">
@@ -144,11 +164,13 @@
                   <img src="{% static 'img/img1.jpg' %}" class="d-block w-100" alt="slider3">
                 </div>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>
@@ -161,9 +183,9 @@
     </div>
   </div>
 
- <section>
-  <br></br><br></br>
- </section>
+  <section>
+    <br></br><br></br>
+  </section>
 
   <!-- footer -->
   <footer class="footer_area section_padding_130_0">
@@ -227,13 +249,13 @@
       </div>
     </div>
   </footer>
-<script src="{% static 'js/navbar.js' %}"></script>
-<script>
-  function CargarBuscarParqueadero(){
-    let id_comuna_select = document.querySelector('#comuna_seleccionada').selectedIndex;
-    window.location.href = "{% url 'buscar'%}?comuna=" + id_comuna_select;
-  }
-</script>
+  <script src="{% static 'js/navbar.js' %}"></script>
+  <script>
+    function CargarBuscarParqueadero() {
+      let id_comuna_select = document.querySelector('#comuna_seleccionada').selectedIndex;
+      window.location.href = "{% url 'buscar'%}?comuna=" + id_comuna_select;
+    }
+  </script>
 </body>
 
 </html>
