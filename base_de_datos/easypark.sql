@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-03-2023 a las 01:23:21
--- Versión del servidor: 10.4.22-MariaDB
--- Versión de PHP: 8.1.0
+-- Tiempo de generación: 24-03-2023 a las 23:43:56
+-- Versión del servidor: 10.4.25-MariaDB
+-- Versión de PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -25,7 +25,7 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `actualizarparqueadero` (IN `nombre_park` VARCHAR(50), IN `direccion` VARCHAR(100), IN `tel_park` VARCHAR(15), IN `imagen_park` LONGBLOB, IN `precio_mes` FLOAT, IN `precio_dia` FLOAT, IN `precio_hora` FLOAT, IN `id_usuario_fk` INT, IN `latitud` DOUBLE, IN `longitud` DOUBLE, IN `comuna_id` INT, IN `park_id` INT)  update parqueadero
+CREATE DEFINER=`root`@`localhost` PROCEDURE `actualizarparqueadero` (IN `nombre_park` VARCHAR(50), IN `direccion` VARCHAR(100), IN `tel_park` VARCHAR(15), IN `imagen_park` LONGBLOB, IN `precio_mes` FLOAT, IN `precio_dia` FLOAT, IN `precio_hora` FLOAT, IN `id_usuario_fk` INT, IN `latitud` DOUBLE, IN `longitud` DOUBLE, IN `comuna_id` INT, IN `park_id` INT)   update parqueadero
 set `nombre_park`=nombre_park, 
 `direccion`=direccion, 
 `tel_park`=tel_park,
@@ -39,20 +39,20 @@ set `nombre_park`=nombre_park,
 `ID_COMU_FK_ID` = comuna_id
 WHERE `id`=park_id$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarcalificacion` (IN `cantidad_estrellas` INT(11), IN `comentarios` VARCHAR(1000), IN `ID_USUARIO` INT(11))  INSERT INTO calificacion(cantidad_estrellas,comentarios,id_usuario)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarcalificacion` (IN `cantidad_estrellas` INT(11), IN `comentarios` VARCHAR(1000), IN `ID_USUARIO` INT(11))   INSERT INTO calificacion(cantidad_estrellas,comentarios,id_usuario)
 values(cantidad_estrellas,comentarios,id_usuario)$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `registroparqueadero` (IN `nombre_park` VARCHAR(50), IN `direccion` VARCHAR(100), IN `tel_park` VARCHAR(15), IN `imagen_park` LONGBLOB, IN `precio_mes` FLOAT, IN `precio_dia` FLOAT, IN `precio_hora` FLOAT, IN `id_usuario_fk` INT, IN `latitud` DOUBLE, IN `longitud` DOUBLE, IN `comuna_id` INT)  INSERT INTO `parqueadero`
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registroparqueadero` (IN `nombre_park` VARCHAR(50), IN `direccion` VARCHAR(100), IN `tel_park` VARCHAR(15), IN `imagen_park` LONGBLOB, IN `precio_mes` FLOAT, IN `precio_dia` FLOAT, IN `precio_hora` FLOAT, IN `id_usuario_fk` INT, IN `latitud` DOUBLE, IN `longitud` DOUBLE, IN `comuna_id` INT)   INSERT INTO `parqueadero`
 	(`nombre_park`,`direccion`,`tel_park`,`imagen_park`,`precio_mes`,`precio_dia`,`precio_hora`,`id_usuario_fk_id`,`latitud`,`longitud`, `ID_COMU_FK_ID`)
 VALUES
 (nombre_park,direccion,tel_park,imagen_park,precio_mes,precio_dia,precio_hora,id_usuario_fk,latitud,longitud,comuna_id)$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `registrousuario` (IN `nombre_usu` VARCHAR(50), IN `apellido` VARCHAR(50), IN `cedula` VARCHAR(20), IN `email_usu` VARCHAR(50), IN `tel_usu` VARCHAR(15), IN `contrasenna` VARCHAR(16))  INSERT INTO usuario (nombre_usu, apellido, cedula, email_usu, tel_usu, contrasenna) VALUES (nombre_usu, apellido, cedula, email_usu, tel_usu, contrasenna)$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registrousuario` (IN `nombre_usu` VARCHAR(50), IN `apellido` VARCHAR(50), IN `cedula` VARCHAR(20), IN `email_usu` VARCHAR(50), IN `tel_usu` VARCHAR(15), IN `contrasenna` VARCHAR(16))   INSERT INTO usuario (nombre_usu, apellido, cedula, email_usu, tel_usu, contrasenna) VALUES (nombre_usu, apellido, cedula, email_usu, tel_usu, contrasenna)$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `reservarparqueadero` (IN `tipo_reserva` VARCHAR(50), IN `placa_veh` VARCHAR(50), IN `cantidad_reserva` VARCHAR(11), IN `id_usuario` INT(11), IN `id_parqueadero` INT)  INSERT into reserva(tipo_reserva,placa_veh,cantidad_reserva,id_usuario,id_parqueadero)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reservarparqueadero` (IN `tipo_reserva` VARCHAR(50), IN `placa_veh` VARCHAR(50), IN `cantidad_reserva` VARCHAR(11), IN `id_usuario` INT(11), IN `id_parqueadero` INT)   INSERT into reserva(tipo_reserva,placa_veh,cantidad_reserva,id_usuario_fk_id,id_parqueadero_fk_id)
 values(tipo_reserva,placa_veh,cantidad_reserva,id_usuario,ID_PARQUEADERO)$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_InsertarCalificacion` (`g_CANTIDAD_ESTRELLAS` INT(11), `g_COMENTARIOS` VARCHAR(1000), `g_ID_PARK` INT(11))  begin
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_InsertarCalificacion` (`g_CANTIDAD_ESTRELLAS` INT(11), `g_COMENTARIOS` VARCHAR(1000), `g_ID_PARK` INT(11))   begin
 insert into calificacion
 (CANTIDAD_ESTRELLAS,
 COMENTARIOS,
@@ -61,7 +61,7 @@ ID_PARK
 values (g_CANTIDAD_ESTRELLAS, g_COMENTARIOS, g_ID_PARK);
 end$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_InsertarParqueadero` (`g_nombre_p` VARCHAR(50), `g_direccion_p` VARCHAR(30), `g_tel_p` VARCHAR(15), `g_precio_mes` FLOAT, `g_precio_dia` FLOAT, `g_precio_hora` FLOAT, `g_id_usuario_fk` INT, `g_id_municipio_fk` INT)  begin
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_InsertarParqueadero` (`g_nombre_p` VARCHAR(50), `g_direccion_p` VARCHAR(30), `g_tel_p` VARCHAR(15), `g_precio_mes` FLOAT, `g_precio_dia` FLOAT, `g_precio_hora` FLOAT, `g_id_usuario_fk` INT, `g_id_municipio_fk` INT)   begin
 insert into parqueadero
 (NOMBRE_PARK,
 DIRECCION,
@@ -74,7 +74,7 @@ ID_MUNICIPIO_FK)
 values (g_nombre_p, g_direccion_p, g_tel_p, g_precio_mes, g_precio_dia, g_precio_hora, g_id_usuario_fk, g_id_municipio_fk);
 end$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_InsertarReserva` (IN `g_PLACA_VEH` VARCHAR(20), IN `g_DIAS_RESERVA` INT(2), IN `g_ID_USUARIO_FK` INT(11))  begin
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_InsertarReserva` (IN `g_PLACA_VEH` VARCHAR(20), IN `g_DIAS_RESERVA` INT(2), IN `g_ID_USUARIO_FK` INT(11))   begin
 insert into reserva
 (PLACA_VEH,DIAS_RESERVA,
 ID_USUARIO_FK
@@ -82,7 +82,7 @@ ID_USUARIO_FK
 values (g_PLACA_VEH,g_DIAS_RESERVA, g_ID_USUARIO_FK);
 end$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_InsertarUsuario` (`g_nombre` VARCHAR(50), `g_apellido` VARCHAR(50), `g_cedula` VARCHAR(20), `g_email` VARCHAR(50), `g_telefono` VARCHAR(15), `g_contrasenna` VARCHAR(16), `g_id_rol` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_InsertarUsuario` (`g_nombre` VARCHAR(50), `g_apellido` VARCHAR(50), `g_cedula` VARCHAR(20), `g_email` VARCHAR(50), `g_telefono` VARCHAR(15), `g_contrasenna` VARCHAR(16), `g_id_rol` INT)   BEGIN
  INSERT INTO usuario
  (NOMBRE_USU,
 APELLIDO,
@@ -324,7 +324,6 @@ CREATE TABLE `django_session` (
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 ('f7mtovpd7n5a2eybta41evp0dt2dtjfb', '.eJxVjEEOwiAURO_C2hAQPnxcuvcMBPggVQNJaVfGu9smXehuMu_NvJkP61L9OvLsJ2IXJtnpt4shPXPbAT1Cu3eeelvmKfJd4Qcd_NYpv66H-3dQw6jbWglliiaM5IqUW9TkDILAKCiFKLWCAtYgnQHJQBEKNQhrwWVlMxH7fAHL8Tcv:1pf5hB:wh1V8qdg0ycAzXTwixc68Nwoxvgt2R3IZWk68G-Yx8E', '2023-04-05 21:08:33.972994'),
-('ikarby5mhjr0n3ebacs2rg2h2tsmhsw7', '.eJxVjDsOwyAQBe9CHSFgWcAp0_sMaPkFJxGWjF1FuXtsyUXSvpl5b-ZpW6vfel78lNiVSXb53QLFZ24HSA9q95nHua3LFPih8JN2Ps4pv26n-3dQqde9VsoQlkCgnSMNGKQAHYyLpLAItApJBnB5SEZYldDswNqSEawbQEf2-QLHkzcQ:1pbkV8:sYwUFbTjAYGUAejgsOF3No136Hcqbd1-v7ogDgU3Ba8', '2023-03-27 15:54:18.214658'),
 ('mxdwmtuzxwiixmw294euc1bgpgpc2i4f', '.eJxVjMEOwiAQBf-FsyEgLCwevfcbCLAgVUOT0p6M_64kPejt5c1kXsyHfat-73n1M7ELU-z0-8WQHrkNQPfQbgtPS9vWOfKh8IN2Pi2Un9fD_QvU0OvICmWKJozkipTfqckZBIFRUApRagUFrEE6A5KBIhRqENaCy8pmIvb-AM0jNzE:1pa8gJ:cIDKcduZck9PzETjZxqnQB4Irl5RTm2ln8FyUfFLlyk', '2023-03-23 05:19:11.373334');
 
 -- --------------------------------------------------------
@@ -391,7 +390,8 @@ INSERT INTO `reserva` (`ID`, `TIPO_RESERVA`, `PLACA_VEH`, `CANTIDAD_RESERVA`, `F
 (4, 'mes', 'rtb 20c', '1', '2023-03-23 16:24:55', 2, 9),
 (5, 'mes', 'rtb 20c', '1', '2023-03-23 16:25:57', 2, 9),
 (6, 'mes', 'rtb 20c', '1', '2023-03-23 16:34:00', 2, 9),
-(7, 'mes', 'rtb 20c', '1', '2023-03-23 16:34:58', 2, 9);
+(7, 'mes', 'rtb 20c', '1', '2023-03-23 16:34:58', 2, 9),
+(8, 'Hora', 'bub778', '2', '2023-03-24 07:25:49', 6, 1);
 
 -- --------------------------------------------------------
 
@@ -438,7 +438,9 @@ CREATE TABLE `users_usuario` (
 INSERT INTO `users_usuario` (`id`, `nombre_usu`, `apellido`, `cedula`, `email_usu`, `tel_usu`, `contrasenna`, `last_login`, `password`, `id_rol_fk_id`) VALUES
 (1, 'Jose David', 'Suarez Muñoz', '1022143865', 'joseluis.suarezmunoz7@gmail.com', '3005982123', '1234', '2023-03-22 21:08:33.947995', '1234', 2),
 (2, 'Sebas', 'Carmona', '1020444516', 's@g.com', '3042124578', '123', '2023-03-23 18:55:08.267807', '123', 2),
-(3, 'Yuner Mateo ', 'Amariles Osorio', '1022480457', 'ymamariles@misena.edu.co', '3026169592', '1234', NULL, '1234', 2);
+(3, 'Yuner Mateo ', 'Amariles Osorio', '1022480457', 'ymamariles@misena.edu.co', '3026169592', '1234', NULL, '1234', 2),
+(6, 'Jose', 'Garcia', '1001250532', 'mono28h@gmail.com', '3023240258', 'jose123', '2023-03-24 12:16:39.224854', 'jose123', 2),
+(7, 'Mateo', 'Amariles', '1022142670', 'mateoamariles2304@gmail.com', '302363929', 'mateo123', '2023-03-24 22:24:18.192103', 'mateo123', 2);
 
 --
 -- Índices para tablas volcadas
@@ -554,13 +556,13 @@ ALTER TABLE `parqueadero`
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `users_usuario`
 --
 ALTER TABLE `users_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
