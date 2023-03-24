@@ -48,6 +48,13 @@ def fnLogout(request):
     logout(request)
     return redirect ('inicio')
 
+def misreservas(request):
+    reservlist= Reserva.objects.filter(id_usuario_fk=request.user.id)
+    return render(request, 'misreservas.html', {'reservlist':reservlist})
+
+def misparks(request):
+    parklist= Parqueadero.objects.filter(id_usuario_fk=request.user.id)
+    return render(request, 'misparks.html',{'parklist':parklist})
 
 def publicar(request):
     return render(request,'publicar.html')
@@ -241,6 +248,7 @@ def actualizarparqueadero(request):
 #regionreserva
 
 def reservaparqueadero(request):
+    id_parqueadero = int(request.GET.get('id'))
     if request.method=="POST":
          if request.POST.get('tipo_reserva') and request.POST.get('placa_veh') and request.POST.get('cantidad_reserva'):
             reservas=Reserva()
@@ -249,10 +257,10 @@ def reservaparqueadero(request):
             reservas.cantidad_reserva=request.POST.get('cantidad_reserva')
             #reservas.save()
             insertar=connection.cursor()
-            insertar.callproc("reservarparqueadero", [reservas.tipo_reserva,reservas.placa_veh,reservas.cantidad_reserva,request.user.id])
+            insertar.callproc("reservarparqueadero", [reservas.tipo_reserva,reservas.placa_veh,reservas.cantidad_reserva,request.user.id,id_parqueadero])
             insertar.close()
             messages.success(request, "Has hecho la reserva con exito")
-            return render(request,'reserva.html')
+            return redirect('../misreservas.html')
     
     else:
         return render(request,'reserva.html')

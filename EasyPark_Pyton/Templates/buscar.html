@@ -69,7 +69,7 @@
                 onclick="MostrarMarcador('{{parqueadero.longitud}}', '{{parqueadero.latitud}}', '{{parqueadero.nombre_park}}', '{{parqueadero.tel_park}}')">{{parqueadero.direccion}}</a>
               </br>
               </br>
-              <a href="{% url 'reservapark' %}" class="btn btn-outline-success">Reserva</a>
+              <a href="{% url 'reservapark' %}?id={{parqueadero.id}}" class="btn btn-outline-success">Reserva</a>
               <a href="{% url 'calificacion' %}" class="btn btn-outline-warning">Calificar</a>
               <a href="https://www.google.com/maps/dir//{{parqueadero.latitud}},{{parqueadero.longitud}}/@{{parqueadero.latitud}},{{parqueadero.longitud}},17z"
                 target="_blank" class="btn btn-outline-primary"> Ir </a>
@@ -150,6 +150,8 @@
     }
   </script>
 
+
 </body>
+
 
 </html>
