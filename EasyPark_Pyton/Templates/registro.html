@@ -24,73 +24,78 @@
       </div>
     </nav>
 
-    <div class="">
-      <div class="container mx-auto">
+    <div class="position-absolute top-50 start-50 translate-middle">
         <center>
+          <br>
           <h3 class="indigo-text">Registrarse</h3>
-          <br></br>
-        </center>
-        <div class="row">
+          <div class="section"></div>
 
-          <form action="" class="col s12" method="post" id="formUsuario">
-            {% csrf_token %}
-            <!--ingresar_nombre-->
-            <div class="row">
-              <div class="input-field col s6">
-                <input id="first_name" type="text" class="validate" name="nombre_usu">
-                <label for="first_name">Ingresa tu(s) Nombre(s)</label>
-              </div>
-              <!--ingresa_apellido-->
-              <div class="input-field col s6">
-                <input id="last_name" type="text" class="validate" name="apellido">
-                <label for="last_name">Ingresa tu(s) Apellido(s)</label>
-              </div>
-            </div>
-            <!--ingresar_email-->
-            <div class="row">
-              <div class="input-field col s12">
-                <input class="validate" id="email" type="email" name="email_usu">
-                <label for="email">Digite su correo electrónico</label>
-              </div>
-            </div>
-            <!--ingresar_nickname-->
-            <div class="row">
-              <div class="input-field col s10">
-                <input id="usuario" type="number" class="validate" name="cedula">
-                <label for="disabled">Ingrese su Cedula </label>
+          <div class="container">
+            <div class="z-depth-1 grey lighten-4 row"
+              style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+            <form action="" class="col s12" method="post" id="formUsuario">
+              {% csrf_token %}
+              <!--ingresar_nombre-->
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="first_name" type="text" class="validate" name="nombre_usu">
+                  <label for="first_name">Ingresa tu(s) Nombre(s)</label>
+                </div>
+                <!--ingresa_apellido-->
+                <div class="input-field col s6">
+                  <input id="last_name" type="text" class="validate" name="apellido">
+                  <label for="last_name">Ingresa tu(s) Apellido(s)</label>
+                </div>
               </div>
               <!--ingresar_email-->
-              <div class="input-field col s12">
-                <input class="validate" id="tel_usu" type="number" name="tel_usu">
-                <label for="email">Digite su telefono</label>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input class="validate" id="email" type="email" name="email_usu">
+                  <label for="email">Digite su correo electrónico</label>
+                </div>
               </div>
-            </div>
-            <!--ingresar_contraseña-->
-            <div class="row">
-              <div class="input-field col s6">
-                <input id="password" type="password" class="validate" name="contrasenna">
-                <label for="password">Ingrese su Contraseña</label>
+              <!--ingresar_nickname-->
+              <div class="row">
+                <div class="input-field col s10">
+                  <input id="usuario" type="number" class="validate" name="cedula">
+                  <label for="disabled">Ingrese su Cedula </label>
+                </div>
+                <!--ingresar_email-->
+                <div class="input-field col s12">
+                  <input class="validate" id="tel_usu" type="number" name="tel_usu">
+                  <label for="email">Digite su telefono</label>
+                </div>
               </div>
-              <div class="input-field col s6">
-                <input id="password2" type="password" class="validate" name="">
-                <label for="password2">Vuelva a ingresar su Contraseña</label>
+              <!--ingresar_contraseña-->
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="password" type="password" class="validate" name="contrasenna">
+                  <label for="password">Ingrese su Contraseña</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="password2" type="password" class="validate" name="">
+                  <label for="password2">Repita su Contraseña</label>
+                </div>
               </div>
-            </div>
-
-            <!--boton_registro-->
-            <div class="row">
-              <button type="button" onclick="validarCampos()"
-                class='col btn btn-small waves-effect indigo text-white'>Registrarse</button>
-            </div>
-            <div class="row">
-              <a class='blue-text text-center' href="{% url 'login'%}">Ya tienes una cuenta? Ingresa</a>
-
-              <!--ir_a_index-->
-              <a class='blue-text text-center' href="{% url 'inicio'%}">Regresar</a>
-            </div>
-          </form>
+  
+              <!--boton_registro-->
+              <div class="row">
+                <button type="button" onclick="validarCampos()"
+                  class='col btn btn-small waves-effect indigo text-white'>Registrarse</button>
+              </div>
+              <div class="row">
+                <a class='blue-text text-center' href="{% url 'login'%}">Ya tienes una cuenta? Ingresa</a>
+  
+                <!--ir_a_index-->
+                <a class='blue-text text-center' href="{% url 'inicio'%}">Regresar</a>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
+        </center>
+
+      
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
       <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
@@ -113,68 +118,6 @@
       }
     }
   </script>
-  <!--FOOTER-->
-<footer class="footer_area section_padding_130_0">
-  <div class="container">
-    <div class="row background-color=danger">
-      <!-- Single Widget-->
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="single-footer-widget section_padding_0_130">
-          <!-- Footer Logo-->
-          <div class="footer-logo mb-3"></div>
-          <p>La mejor página que existe para encontrar tu parqueadero.</p>
-          <!-- Copywrite Text-->
-          <div class="copywrite-text mb-5">
-            <p class="mb-0"><i class="lni-heart mr-1"></i><a class="ml-1"></a></p> <br><br>
-            <p>Jose Luis Suarez Muñoz <br>Yuner Mateo Amariles Osorio <br>Rosemberg Leandro Gomez</p>
-          </div>
-          <!-- Footer Social Area-->
-          <div></div>
-        </div>
-      </div>
-      <!-- Single Widget-->
-      <div class="col-12 col-sm-6 col-lg">
-        <div class="single-footer-widget section_padding_0_130">
-          <!-- Widget Title-->
-          <h5 class="widget-title">Acerca</h5>
-          <!-- Footer Menu-->
-          <div class="footer_menu">
-            <ul>
-              <li><a href="#">Políticas</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- Single Widget-->
-      <div class="col-12 col-sm-6 col-lg">
-        <div class="single-footer-widget section_padding_0_130">
-          <!-- Widget Title-->
-          <h5 class="widget-title">Soporte</h5>
-          <!-- Footer Menu-->
-          <div class="footer_menu">
-            <ul>
-              <li><a href="#">contactame.easypark@gmail.com</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- Single Widget-->
-      <div class="col-12 col-sm-6 col-lg">
-        <div class="single-footer-widget section_padding_0_130">
-          <!-- Widget Title-->
-          <h5 class="widget-title">Contactanos</h5>
-          <!-- Footer Menu-->
-          <div class="footer_menu">
-            <ul>
-              <li><a href="#">Términos &amp; Condiciones</a></li>
-              <li><a href="#">Centro de Ayuda</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
 </body>
 
 </html>

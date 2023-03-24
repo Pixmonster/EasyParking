@@ -11,9 +11,15 @@ from django.contrib import messages
 from django.contrib.auth import login,logout
 from EasyPark_Pyton.models import  Comuna, Parqueadero,Reserva,Calificacion
 from users.models import Usuario
+from django.core.mail import send_mail
+from django.conf import settings
 
 def MapView(request):
     return render(request,'map.html')
+
+def send_mail(request):
+    return render(request)
+
 
 def inicio(request):
     comunas = Comuna.objects.all()
