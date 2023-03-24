@@ -37,5 +37,4 @@ urlpatterns = [
     path('actualizarusuario.html/', actualizarusuario, name ='actualizarusuario'),
     path('misreservas.html/', misreservas ,name='misreservas'),
     path('misparks.html/', misparks ,name='misparks')
-
 ]
