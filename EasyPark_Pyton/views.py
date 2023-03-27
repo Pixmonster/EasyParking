@@ -191,7 +191,11 @@ def borrarparqueadero(request):
         id = int(request.GET.get('id'))
         parqueadero=Parqueadero.objects.get(id=id)
         parqueadero.delete()
-        return buscar(request)
+
+        if request.GET.get('comuna'):  
+            return buscar(request)
+        else:
+            return redirect('misparks')
     else:
         return redirect('login')
 

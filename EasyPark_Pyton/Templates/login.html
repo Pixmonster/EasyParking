@@ -34,7 +34,7 @@
         <div class="z-depth-1 grey lighten-4 row"
           style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
-          <form class="col s12" method="post">
+          <form class="col s12 needs-validation" method="post" novalidate>
             {% csrf_token %}
             <div class='row '>
               <div class='col s12'>
@@ -43,15 +43,21 @@
             <!--input_email-->
             <div class='row'>
               <div class='input-field col s12'>
-                <input class='validate' type='email' name='email' id='email' />
                 <label for='email'>Ingresa tu dirección de correo electrónico</label>
+                <input class='validate' type='email' name='email' id='email' / required>
+                <div class="invalid-feedback">
+                  Falta este dato!!
+              </div>
               </div>
             </div>
             <!--input_contraseña-->
             <div class='row'>
               <div class='input-field col s12'>
-                <input class='validate' type='password' name='password' id='password' />
                 <label for='password'>Ingresa tu contraseña</label>
+                <input class='validate' type='password' name='password' id='password' / required>
+                <div class="invalid-feedback">
+                  Falta este dato!!
+              </div>
               </div>
               <label style='float: right;'>
                 <!--olvidar_contraseña-->
@@ -79,7 +85,7 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
   </div>
 
-  
+  <script src='{% static "bootstrap/validations_form.js" %}'></script> 
 </body>
 
 </html>

@@ -32,37 +32,52 @@
           <div class="z-depth-1 grey lighten-4 row"
             style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
-          <form action="" class="col s12" method="post" enctype="multipart/form-data">
+          <form action="" class="col s12 needs-validation" method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             <!--ingresar_nombre_park-->
             <div class="row">
               <div class="input-field col s6">
-                <input id="Nombre_park" type="text" class="validate" name="nombre_park">
                 <label for="nombre_park">Ingrese el nombre del parqueadero</label>
+                <input id="Nombre_park" type="text" class="validate" name="nombre_park" maxlength="25" required>
+                <div class="invalid-feedback">
+                  Falta este dato!!
+              </div>
               </div>
               <!--ingresar_direccion-->
               <!--ingresar_tel-->
               <div class="input-field col s6">
-                <input id="tel" type="text" class="validate" name="tel_park">
                 <label for="tel">Ingrese el telefono</label>
+                <input id="tel" type="text" class="validate" name="tel_park" maxlength="13" required>
+                <div class="invalid-feedback">
+                  Falta este dato!!
+              </div>
               </div>
             </div>
 
             <!--ingresar_precio_hora-->
             <div class="row">
               <div class="input-field col s4">
-                <input id="precio_h" type="number" class="validate" name="precio_hora">
                 <label for="precio_h">Precio por Hora</label>
+                <input id="precio_h" type="number" class="validate" name="precio_hora" maxlength="5" required>
+                <div class="invalid-feedback">
+                  Falta este dato!!
+              </div>
               </div>
               <!--ingresa_precio_día-->
               <div class="input-field col s4">
-                <input id="precio_d" type="number" class="validate" name="precio_dia">
                 <label for="precio_d">Precio por Día</label>
+                <input id="precio_d" type="number" class="validate" name="precio_dia" maxlength="6" required>
+                <div class="invalid-feedback">
+                  Falta este dato!!
+              </div>
               </div>
               <!--ingresa_precio_mes-->
               <div class="input-field col s4">
-                <input id="precio_m" type="number" class="validate" name="precio_mes">
                 <label for="precio_m">Precio por Mes</label>
+                <input id="precio_m" type="number" class="validate" name="precio_mes" maxlength="7" required>
+                <div class="invalid-feedback">
+                  Falta este dato!!
+              </div>
               </div>
             </div>
             <!--tipo_veh-->
@@ -72,17 +87,23 @@
               <div class="file-field input-field">
                 <div class="btn waves-effect indigo text-white">
                   <span>Cargar</span>
-                  <input type="file" accept="image/*" name="imagen_park">
+                  <input type="file" accept="image/*" name="imagen_park" required>
                 </div>
+                <div class="invalid-feedback">
+                  Falta este dato!!
+              </div>
                 <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text" placeholder="sube una foto del parqueadero">
+                  <input class="file-path validate" type="text" placeholder="Sube una foto del parqueadero">
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="input-field col s6">
-                <input id="direccion" type="text" class="validate" name="direccion">
                 <label for="direccion">Ingrese la dirección</label>
+                <input id="direccion" type="text" class="validate" name="direccion" required>
+                <div class="invalid-feedback">
+                  Falta este dato!!
+              </div>
                 <input id="latitud" type="hidden" value="" name="latitud">
                 <input id="longitud" type="hidden" value="" name="longitud">
                 <input id="long_name" type="hidden" value="" name="long_name">
@@ -189,6 +210,7 @@
     </div>
   </section>
   
+  <script src='{% static "js/validations_form.js" %}'></script> 
 </body>
 
 </html>

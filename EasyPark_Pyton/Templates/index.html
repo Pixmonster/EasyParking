@@ -88,10 +88,12 @@
               <!--El selector de municipio-->
               <select class="form-control text-center" style="font-family:calibri;" name="" id="comuna_seleccionada">
                 <option value="" disabled selected>Seleccione una comuna de Medellín</option>
+              
                 {% for comuna in comunas_list %}
                 <option value="{{comuna.id}}">{{comuna.nombre_comu}}</option>
                 {% endfor %}
               </select>
+              
               {% if request.user is not None and request.user.is_authenticated %}
               <button class="btn btn-primary" onclick="CargarBuscarParqueadero()">Buscar</button>
               {% else %}

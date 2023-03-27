@@ -26,7 +26,7 @@
         <div>
             <div class="container mx-auto">
                 <center>
-                    <h3 class="indigo-text">Registrar Parqueadero</h3>
+                    <h3 class="indigo-text">Editar Parqueadero</h3>
                     <br></br>
                 </center>
                 <div class="row">
@@ -36,14 +36,14 @@
                         <div class="row">
                             <div class="input-field col s6">
                                 <input id="Nombre_park" type="text" class="validate" name="nombre_park"
-                                    value="{{unsoloparqueadero.nombre_park}}">
+                                    value="{{unsoloparqueadero.nombre_park}}" maxlength="25" required>
                                 <label for="nombre_park">Ingrese el nombre del parqueadero</label>
                             </div>
                             <!--ingresar_direccion-->
                             <!--ingresar_tel-->
                             <div class="input-field col s6">
                                 <input id="tel" type="text" class="validate" name="tel_park"
-                                    value="{{unsoloparqueadero.tel_park}}">
+                                    value="{{unsoloparqueadero.tel_park}}" maxlength="13" required>
                                 <label for="tel">Ingrese el telefono</label>
                             </div>
                         </div>
@@ -52,19 +52,19 @@
                         <div class="row">
                             <div class="input-field col s4">
                                 <input id="precio_h" type="number" class="validate" name="precio_hora"
-                                    value="{{unsoloparqueadero.precio_hora}}">
+                                    value="{{unsoloparqueadero.precio_hora}}" maxlength="5" required>
                                 <label for="precio_h">Precio por Hora</label>
                             </div>
                             <!--ingresa_precio_día-->
                             <div class="input-field col s4">
                                 <input id="precio_d" type="number" class="validate" name="precio_dia"
-                                    value="{{unsoloparqueadero.precio_dia}}">
+                                    value="{{unsoloparqueadero.precio_dia}}"maxlength="6" required>
                                 <label for="precio_d">Precio por Día</label>
                             </div>
                             <!--ingresa_precio_mes-->
                             <div class="input-field col s4">
                                 <input id="precio_m" type="number" class="validate" name="precio_mes"
-                                    value="{{unsoloparqueadero.precio_mes}}">
+                                    value="{{unsoloparqueadero.precio_mes}}" maxlength="7" required>
                                 <label for="precio_m">Precio por Mes</label>
                             </div>
                         </div>
@@ -261,6 +261,7 @@
       </div>
     </div>
   </footer>
+  <script src='{% static "bootstrap/validations_form.js" %}'></script> 
 </body>
 
 </html>

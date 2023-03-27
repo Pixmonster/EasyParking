@@ -26,7 +26,7 @@
             <div class="container-fluid">
               <div class="row">
       
-                <form action="" class="col s12 " method="post">
+                <form action="" class="col s12 needs-validation" method="post" novalidate>
                   {% csrf_token %}
                   <div class="row">
                     <div class="input-field col col-sm-12">
@@ -40,13 +40,19 @@
                   </div>
                   <div class="row">
                     <div class="input-field col col-sm-12">
-                      <input id="first_name" type="text" class="validate" name="placa_veh">
                       <label for="first_name">Placa del vehiculo</label>
+                      <input id="first_name" type="text" class="validate" required name="placa_veh" maxlength="7">
+                      <div class="invalid-feedback">
+                        Falta este dato!!
+                    </div>
                     </div>
                   <div class="row">
                     <div class="input-field col col-sm-12 ">
-                      <input id="first_name" type="number" class="validate" name="cantidad_reserva">
-                      <label for="first_name">Cantidad de la reserva</label>
+                      <label for="first_name">Tiempo de reserva</label>
+                      <input id="first_name" type="number" class="validate" name="cantidad_reserva" required>
+                      <div class="invalid-feedback">
+                        Falta este dato!!
+                    </div>
                     </div>
                   </div>
                   <div class="row">
@@ -68,6 +74,7 @@
           </div>
           </div>
         </section>
+        <script src='{% static "js/validations_form.js" %}'></script> 
       </body>
       
       </html>

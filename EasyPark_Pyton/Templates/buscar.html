@@ -68,7 +68,12 @@
               <a href="#" style="color: gray;"
                 onclick="MostrarMarcador('{{parqueadero.longitud}}', '{{parqueadero.latitud}}', '{{parqueadero.nombre_park}}', '{{parqueadero.tel_park}}')">{{parqueadero.direccion}}</a>
               </br>
-              </br>
+            </br>
+              <h6>Precio/hora:${{parqueadero.precio_hora}}</h6>
+              <h6>Precio/dia: ${{parqueadero.precio_dia}}</h6>
+              <h6>Precio/mes: ${{parqueadero.precio_mes}}</h6>
+            
+              
               <a href="{% url 'reservapark' %}?id={{parqueadero.id}}" class="btn btn-outline-success">Reserva</a>
               <a href="{% url 'calificacion' %}" class="btn btn-outline-warning">Calificar</a>
               <a href="https://www.google.com/maps/dir//{{parqueadero.latitud}},{{parqueadero.longitud}}/@{{parqueadero.latitud}},{{parqueadero.longitud}},17z"
