@@ -32,7 +32,7 @@
       <label for="check" class="checkbtn">
         <i class="fa fa-bars"></i>
       </label>
-      <ul>
+      <ul class="m-0">
         {% if request.user is not None and request.user.is_authenticated %}
         <li><a href="#somos">¿Qué somos? </a></li>
         <li><a href="#funciona">¿Cómo funciona? </a></li>
@@ -83,7 +83,6 @@
         <div class="card">
           <div class="card2">
             <div id="Lugares" class="text-center">
-              <br>
               <p id="tittle_park">ENCUENTRA UN PARQUEADERO</p> <br>
               <!--El selector de municipio-->
               <select class="form-control text-center" style="font-family:calibri;" name="" id="comuna_seleccionada">
@@ -97,7 +96,7 @@
               {% if request.user is not None and request.user.is_authenticated %}
               <button class="btn btn-primary" onclick="CargarBuscarParqueadero()">Buscar</button>
               {% else %}
-              <a class="btn btn-primary" href="login.html">Buscar</a>
+              <a class="btn btn-primary m-2" href="login.html">Buscar</a>
               {% endif %}
             </div>
           </div>

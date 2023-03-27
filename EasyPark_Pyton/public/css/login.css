@@ -1,3 +1,9 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
 .input-field input[type=date]:focus+label,
 .input-field input[type=text]:focus+label,
 .input-field input[type=email]:focus+label,
@@ -13,6 +19,13 @@
     box-shadow: none
 }
 
+.box-inicio-sesion{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 85vh;
+}
+
 #loguito {
     position: relative;
     width: 200px;
@@ -20,14 +33,12 @@
 }
 body {
     background: linear-gradient(70deg, #e6e6e6, #f7f7f7);
-    color: #514B64
+    color: #514B64;
+}
+nav{
+    height: max-content !important;
 }
 
-nav ul{
-    float: right;
-    margin-right: 20px;
-    
-}
 nav ul li{
     display: inline-block;
     line-height: 40px;
@@ -64,9 +75,7 @@ li .activar, li a:hover{
     .enlace{
         padding-left: 20px;
     }
-    nav ul li a{
-        font-size: 16px;
-    }
+    
 }
 @media (max-width: 858px){
     .checkbtn{

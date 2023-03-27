@@ -26,7 +26,7 @@ code {
 }
 
 .card {
-    width: 40%;
+    width: 30%;
     height: 30vh;
     top: 100px;
     border-radius: 20px;
@@ -36,9 +36,10 @@ code {
 }
 
 .card2 {
+    padding: 15px;
     border-radius: 20px;
     width: 100%;
-    height: 30vh;
+    height: max-content;
     left: 25%;
     background-color: #ffffff;
     transition: all .2s
@@ -54,13 +55,15 @@ code {
 
 #Lugares {
     font-family: 'Geometos';
-    font-size: 1.5rem;
     color: #000000;
     text-shadow: 0.5px 0.5px 0.5px black;
+    height: 100%;
 }
 
 #tittle_park {
-    top: 250px;
+    margin: 0;
+    padding-top: 15px;
+    font-size: 1.3rem;
 }
 
 .nav-link {

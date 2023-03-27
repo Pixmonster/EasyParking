@@ -1,81 +1,69 @@
+{%extends 'layouts/menu.html'%}
 {% load static %}
-{%include 'layouts/menu.html'%}
 
-<nav class="navbar navbar-expand-lg sticky-top py-3 shadow-sm mb-5" style="background-color: rgb(39, 150, 248) ;">
-      <div class="container">
-        <a href="{% url 'inicio'%}" class="navbar-brand">
-          <!-- Logo Image -->
-          <img href="#" src="{% static 'img/Logo.png' %}" alt="logo" width="100" height="50" alt=""
-            class="d-inline-block align-middle mr-2">
-        </a>
-        <input type="checkbox" id="check">
-        <label for="check" class="checkbtn">
-          <i class="fa fa-bars"></i>
-        </label>
-        <ul>
-          <li><a class="" href="{% url 'inicio'%}">Inicio</a></li>
-        </ul>
-      </div>
-    </nav>
+{% block items-nav %}
+<li><a class="" href="{% url 'inicio'%}">Inicio</a></li>
+{%endblock%}
 
-        <div class="position-absolute top-50 start-50 translate-middle">
-            <center>
-              <h3 class="indigo-text">Reservar Parqueadero</h3>
-              <br></br>
-            </center>
-            <div class="container-fluid">
-              <div class="row">
-      
-                <form action="" class="col s12 needs-validation" method="post" novalidate>
-                  {% csrf_token %}
-                  <div class="row">
-                    <div class="input-field col col-sm-12">
-                      <select class="form-control text-center" class="validate" style="font-family:arial;" name="tipo_reserva" id="">
-                        <option value="" disabled selected>Seleccione tipo de reserva</option>
-                        <option value="Hora">Reserva por hora</option>
-                        <option value="dia">Reserva por dia</option>
-                        <option value="mes">Reserva por mes</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="input-field col col-sm-12">
-                      <label for="first_name">Placa del vehiculo</label>
-                      <input id="first_name" type="text" class="validate" required name="placa_veh" maxlength="7">
-                      <div class="invalid-feedback">
-                        Falta este dato!!
-                    </div>
-                    </div>
-                  <div class="row">
-                    <div class="input-field col col-sm-12 ">
-                      <label for="first_name">Tiempo de reserva</label>
-                      <input id="first_name" type="number" class="validate" name="cantidad_reserva" required>
-                      <div class="invalid-feedback">
-                        Falta este dato!!
-                    </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="input-field col col-sm-2 mx-auto d-block">
-                      <button type="submit" class='col btn btn-small waves-effect indigo text-white '>Reservar</button>
-                    </div>
-                  {% if messages %}
-                  {% for mensaje in messages %}
-                   <h2  style="color:rgb(80, 142, 224); text-align: center; box-shadow: inset;">{{mensaje}}</h2>
-                  {% endfor %}
-                  {% endif %}
-                  </div>
-                </form>
+{%block content%}
+<div class="position-absolute top-50 start-50 translate-middle">
+  <center>
+    <h3 class="indigo-text">Reservar Parqueadero</h3>
+    <br></br>
+  </center>
+  <div class="container-fluid">
+    <div class="row">
+
+      <form action="" class="col s12 needs-validation" method="post" novalidate>
+        {% csrf_token %}
+        <div class="row">
+          <div class="input-field col col-sm-12">
+            <select class="form-control text-center" class="validate" style="font-family:arial;" name="tipo_reserva"
+              id="">
+              <option value="" disabled selected>Seleccione tipo de reserva</option>
+              <option value="Hora">Reserva por hora</option>
+              <option value="dia">Reserva por dia</option>
+              <option value="mes">Reserva por mes</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col col-sm-12">
+            <label for="first_name">Placa del vehiculo</label>
+            <input id="first_name" type="text" class="validate" required name="placa_veh" maxlength="7">
+            <div class="invalid-feedback">
+              Falta este dato!!
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col col-sm-12 ">
+              <label for="first_name">Tiempo de reserva</label>
+              <input id="first_name" type="number" class="validate" name="cantidad_reserva" required>
+              <div class="invalid-feedback">
+                Falta este dato!!
               </div>
             </div>
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-            <script type="text/javascript"
-              src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
           </div>
+          <div class="row">
+            <div class="input-field col col-sm-2 mx-auto d-block">
+              <button type="submit" class='col btn btn-small waves-effect indigo text-white '>Reservar</button>
+            </div>
+            {% if messages %}
+            {% for mensaje in messages %}
+            <h2 style="color:rgb(80, 142, 224); text-align: center; box-shadow: inset;">{{mensaje}}</h2>
+            {% endfor %}
+            {% endif %}
           </div>
-        </section>
-        <script src='{% static "js/validations_form.js" %}'></script> 
-      </body>
-      
-      </html>
-    
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+{%endblock%}
+{%block scripts%}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+<script src='{% static "js/validations_form.js" %}'></script>
+{%endblock%}

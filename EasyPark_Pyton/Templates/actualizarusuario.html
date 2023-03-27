@@ -1,121 +1,112 @@
+{%extends 'layouts/menu.html'%}
 {% load static %}
-{%include 'layouts/menu.html'%}
 
-<body>
-  <section>
-    <!-- NAVBAR-->
-    <nav class="navbar navbar-expand-lg sticky-top py-3 shadow-sm" style="background-color: rgb(39, 150, 248) ;">
-      <div class="container">
-        <a href="{% url 'inicio'%}" class="navbar-brand">
-          <!-- Logo Image -->
-          <img href="#" src="{% static 'img/Logo.png' %}" alt="logo" width="100" height="50" alt=""
-            class="d-inline-block align-middle mr-2">
-        </a>
-        <!--Menu responsive-->
-        <input type="checkbox" id="check">
-        <label for="check" class="checkbtn">
-          <i class="fa fa-bars"></i>
-        </label>
-        <ul>
-          <li><a class="" href="{% url 'inicio'%}">Inicio</a></li>
-        </ul>
-      </div>
-    </nav>
+{% block items-nav %}
+<li><a class="" href="{% url 'inicio'%}">Inicio</a></li>
+{%endblock%}
 
-    <div class="">
-      <br>
-      <div class="container mx-auto">
-        <center>
-          <h3 class="indigo-text">Actualizar Información</h3>
-          <br></br>
-        </center>
+{%block content%}
+<div class="">
+  <br>
+  <div class="container mx-auto">
+    <center>
+      <h3 class="indigo-text">Actualizar Información</h3>
+      <br></br>
+    </center>
+    <div class="row">
+
+      <form action="" onsubmit="validarCampos()" class="col s12 needs-validation" method="post" id="formUsuario"
+        novalidate>
+        {% csrf_token %}
+        <!--ingresar_nombre-->
         <div class="row">
-
-          <form action=""  onsubmit="validarCampos()" class="col s12 needs-validation" method="post" id="formUsuario" novalidate>
-            {% csrf_token %}
-            <!--ingresar_nombre-->
-            <div class="row">
-              <div class="input-field col s6">
-                <input id="first_name" type="text" value="{{unsolousuario.nombre_usu}}" class="validate" name="nombre_usu" required maxlength="25">
-                <label for="first_name">Ingresa tu(s) Nombre(s)</label>
-              </div>
-              <!--ingresa_apellido-->
-              <div class="input-field col s6">
-                <input id="last_name" type="text" value="{{unsolousuario.apellido}}" class="validate" name="apellido" required maxlength="25">
-                <label for="last_name">Ingresa tu(s) Apellido(s)</label>
-              </div>
-            </div>
-            <!--ingresar_email-->
-            <div class="row">
-              <div class="input-field col s12">
-                <input class="validate" id="email" type="email" value="{{unsolousuario.email_usu}}" name="email_usu" required maxlength="25">
-                <label for="email">Digite su correo electrónico</label>
-              </div>
-            </div>
-            <!--ingresar_nickname-->
-            <div class="row">
-              <div class="input-field col s10">
-                <input id="usuario" type="number" value="{{unsolousuario.cedula}}" class="validate" name="cedula" required maxlength="25">
-                <label for="disabled">Ingrese su Cedula </label>
-              </div>
-              <!--ingresar_email-->
-              <div class="input-field col s12">
-                <input class="validate" id="tel_usu" type="number" value="{{unsolousuario.tel_usu}}" name="tel_usu" required maxlength="25">
-                <label for="email">Digite su telefono</label>
-              </div>
-            </div>
-            <!--ingresar_contraseña-->
-            <div class="row">
-              <div class="input-field col s6">
-                <input id="password" type="password" value="{{unsolousuario.contrasenna}}" class="validate" name="contrasenna" required maxlength="25">
-                <label for="password">Ingrese su Contraseña</label>
-              </div>
-              <div class="input-field col s6">
-                <input id="password2" type="password" class="validate" name="">
-                <label for="password2">Vuelva a ingresar su Contraseña</label>
-              </div>
-            </div>
-
-            <!--boton_registro-->
-            <div class="row">
-              <button type="submit" 
-                class='col btn btn-small waves-effect indigo text-white'>Guardar Cambios</button>
-            </div>
-            <div class="row">
-            <!--ir_a_index-->
-              <a class='blue-text text-center' href="{% url 'inicio'%}">Regresar</a>
-            </div>
-          </form>
+          <div class="input-field col s6">
+            <input id="first_name" type="text" value="{{unsolousuario.nombre_usu}}" class="validate" name="nombre_usu"
+              required maxlength="25">
+            <label for="first_name">Ingresa tu(s) Nombre(s)</label>
+          </div>
+          <!--ingresa_apellido-->
+          <div class="input-field col s6">
+            <input id="last_name" type="text" value="{{unsolousuario.apellido}}" class="validate" name="apellido"
+              required maxlength="25">
+            <label for="last_name">Ingresa tu(s) Apellido(s)</label>
+          </div>
         </div>
-      </div>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-      <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-    </div>
-    </div>
-    {% if messages %}
-    {% for mensaje in messages %}
-    <h4 style="color: red;">{{mensaje}}</h4>
-    {% endfor %}
-    {% endif %}
-  </section>
-  <script>
-    function validarCampos() {
-      var pass1 = document.getElementById("password").value;
-      var pass2 = document.getElementById("password2").value;
-      
-      if (pass1 === pass2) {
-        // document.getElementById("formUsuario").submit();
-        return true
-      } else {
-        event.preventDefault()
-        alert("Faltan campos o las contraseñas no coinciden");
-        return false
-      }
-    }
-    
-  </script>
-  <script src='{% static "bootstrap/validations_form.js" %}'></script> 
-</body>
+        <!--ingresar_email-->
+        <div class="row">
+          <div class="input-field col s12">
+            <input class="validate" id="email" type="email" value="{{unsolousuario.email_usu}}" name="email_usu"
+              required maxlength="25">
+            <label for="email">Digite su correo electrónico</label>
+          </div>
+        </div>
+        <!--ingresar_nickname-->
+        <div class="row">
+          <div class="input-field col s10">
+            <input id="usuario" type="number" value="{{unsolousuario.cedula}}" class="validate" name="cedula" required
+              maxlength="25">
+            <label for="disabled">Ingrese su Cedula </label>
+          </div>
+          <!--ingresar_email-->
+          <div class="input-field col s12">
+            <input class="validate" id="tel_usu" type="number" value="{{unsolousuario.tel_usu}}" name="tel_usu" required
+              maxlength="25">
+            <label for="email">Digite su telefono</label>
+          </div>
+        </div>
+        <!--ingresar_contraseña-->
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="password" type="password" value="{{unsolousuario.contrasenna}}" class="validate"
+              name="contrasenna" required maxlength="25">
+            <label for="password">Ingrese su Contraseña</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="password2" type="password" class="validate" name="">
+            <label for="password2">Vuelva a ingresar su Contraseña</label>
+          </div>
+        </div>
 
-</html>     
+        <!--boton_registro-->
+        <div class="row">
+          <button type="submit" class='col btn btn-small waves-effect indigo text-white'>Guardar Cambios</button>
+        </div>
+        <div class="row">
+          <!--ir_a_index-->
+          <a class='blue-text text-center' href="{% url 'inicio'%}">Regresar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+{% if messages %}
+{% for mensaje in messages %}
+<h4 style="color: red;">{{mensaje}}</h4>
+{% endfor %}
+{% endif %}
+</section>
+
+{%endblock%}
+{%block scripts%}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+<script>
+  function validarCampos() {
+    var pass1 = document.getElementById("password").value;
+    var pass2 = document.getElementById("password2").value;
+
+    if (pass1 === pass2) {
+      // document.getElementById("formUsuario").submit();
+      return true
+    } else {
+      event.preventDefault()
+      alert("Faltan campos o las contraseñas no coinciden");
+      return false
+    }
+  }
+
+</script>
+<script src='{% static "bootstrap/validations_form.js" %}'></script>
+{%endblock%}
