@@ -1,8 +1,11 @@
+
+
 body {
     min-height: 100vh;
     background: linear-gradient(70deg, #e6e6e6, #f7f7f7);
     color: #514B64
 }
+
 
 code {
     padding: .2rem;

@@ -1,99 +1,125 @@
-{%extends 'layouts/menu.html'%}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block items-nav %}
-<li><a class="" href="{% url 'inicio'%}">Inicio</a></li>
-{%endblock%}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'js/jquery.min.js' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
-{%block content%}
-<div class="container">
-    {% for reserva in reservlist %}
-    <div class="card mb-3">
-        <div class="card-body">
-            <h3 class="card-title text-center">{{reserva.id_parqueadero_fk.nombre_park}}</h3>
-            <div class="row">
-                <div class="col">
-                    <h6>{{reserva.id_parqueadero_fk.direccion}}</h6>
-                    <span>Placa de tu vehiculo: {{reserva.placa_veh}}</span><br>
-                    <span>Cantidad de tiempo: {{reserva.cantidad_reserva}} {{reserva.tipo_reserva}}(s)</span><br>
-                    <span>Precio total: ${{reserva.total_precio_reserva}}</span><br>
-                    <span>Fecha solicitud: {{ reserva.fecha_hora|date:'d-M-Y' }} {{ reserva.fecha_hora|time:'h:ia'
-                        }}</span><br>
+<body>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg sticky-top py-3 shadow-sm mb-5" style="background-color: rgb(39, 150, 248) ;">
+        <div class="container">
+            <a href="{% url 'inicio'%}" class="navbar-brand">
+                <!-- Logo Image -->
+                <img href="#" src="{% static 'img/Logo.png' %}" alt="logo" width="100" height="50" alt=""
+                    class="d-inline-block align-middle mr-2">
+            </a>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fa fa-bars"></i>
+            </label>
+            <ul>
+                <li><a class="" href="{% url 'inicio'%}">Inicio</a></li>
+            </ul>
+        </div>
+    </nav>
 
-                </div>
-                <div class="col">
-                    <img src="data:image/png;base64,{{reserva.id_parqueadero_fk.get_imagen_park_base64}}"
-                        style="height: auto; width:350px;" />
+
+    <div class="container">
+        {% for reserva in reservlist %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3 class="card-title text-center">{{reserva.id_parqueadero_fk.nombre_park}}</h3>
+                <div class="row">
+                    <div class="col">
+                        <h6>{{reserva.id_parqueadero_fk.direccion}}</h6>
+                        <span>Placa de tu vehiculo: {{reserva.placa_veh}}</span><br>
+                        <span>Cantidad de tiempo: {{reserva.cantidad_reserva}} {{reserva.tipo_reserva}}(s)</span><br>
+                        <span>Precio total: ${{reserva.total_precio_reserva}}</span><br>
+                        <span>Fecha solicitud: {{ reserva.fecha_hora|date:'d-M-Y' }} {{ reserva.fecha_hora|time:'h:ia' }}</span><br>
+
+                    </div>
+                    <div class="col">
+                        <img src="data:image/png;base64,{{reserva.id_parqueadero_fk.get_imagen_park_base64}}"
+                            style="height: auto; width:350px;" />
+                    </div>
                 </div>
             </div>
         </div>
         {% endfor %}
-    </div>
 
-    <!-- footer -->
+        <!-- footer -->
     <footer class="footer_area section_padding_130_0">
-        <!-- <div class="container"> -->
-        <div class="row">
-            <!-- Single Widget-->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="single-footer-widget section_padding_0_130">
-                    <!-- Footer Logo-->
-                    <div class="footer-logo mb-3"></div>
-                    <p>La mejor página que existe para encontrar tu parqueadero.</p>
-                    <!-- Copywrite Text-->
-                    <div class="copywrite-text mb-5">
-                        <p class="mb-0"><i class="lni-heart mr-1"></i><a class="ml-1"></a></p> <br><br>
-                        <p>Jose Luis Suarez Muñoz <br>Yuner Mateo Amariles Osorio <br>Rosemberg Leandro Gomez
-                        </p>
-                    </div>
-                    <!-- Footer Social Area-->
-                    <div></div>
-                </div>
-            </div>
-            <!-- Single Widget-->
-            <div class="col-12 col-sm-6 col-lg">
-                <div class="single-footer-widget section_padding_0_130">
-                    <!-- Widget Title-->
-                    <h5 class="widget-title">Acerca</h5>
-                    <!-- Footer Menu-->
-                    <div class="footer_menu">
-                        <ul>
-                            <li><a href="#">Políticas</a></li>
-                        </ul>
+        <div class="container">
+            <div class="row">
+                <!-- Single Widget-->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-footer-widget section_padding_0_130">
+                        <!-- Footer Logo-->
+                        <div class="footer-logo mb-3"></div>
+                        <p>La mejor página que existe para encontrar tu parqueadero.</p>
+                        <!-- Copywrite Text-->
+                        <div class="copywrite-text mb-5">
+                            <p class="mb-0"><i class="lni-heart mr-1"></i><a class="ml-1"></a></p> <br><br>
+                            <p>Jose Luis Suarez Muñoz <br>Yuner Mateo Amariles Osorio <br>Rosemberg Leandro Gomez</p>
+                        </div>
+                        <!-- Footer Social Area-->
+                        <div></div>
                     </div>
                 </div>
-            </div>
-            <!-- Single Widget-->
-            <div class="col-12 col-sm-6 col-lg">
-                <div class="single-footer-widget section_padding_0_130">
-                    <!-- Widget Title-->
-                    <h5 class="widget-title">Soporte</h5>
-                    <!-- Footer Menu-->
-                    <div class="footer_menu">
-                        <ul>
-                            <li><a href="#">contactame.easypark@gmail.com</a></li>
-                        </ul>
+                <!-- Single Widget-->
+                <div class="col-12 col-sm-6 col-lg">
+                    <div class="single-footer-widget section_padding_0_130">
+                        <!-- Widget Title-->
+                        <h5 class="widget-title">Acerca</h5>
+                        <!-- Footer Menu-->
+                        <div class="footer_menu">
+                            <ul>
+                                <li><a href="#">Políticas</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Single Widget-->
-            <div class="col-12 col-sm-6 col-lg">
-                <div class="single-footer-widget section_padding_0_130">
-                    <!-- Widget Title-->
-                    <h5 class="widget-title">Contactanos</h5>
-                    <!-- Footer Menu-->
-                    <div class="footer_menu">
-                        <ul>
-                            <li><a href="#">Términos &amp; Condiciones</a></li>
-                            <li><a href="#">Centro de Ayuda</a></li>
-                        </ul>
+                <!-- Single Widget-->
+                <div class="col-12 col-sm-6 col-lg">
+                    <div class="single-footer-widget section_padding_0_130">
+                        <!-- Widget Title-->
+                        <h5 class="widget-title">Soporte</h5>
+                        <!-- Footer Menu-->
+                        <div class="footer_menu">
+                            <ul>
+                                <li><a href="#">contactame.easypark@gmail.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Widget-->
+                <div class="col-12 col-sm-6 col-lg">
+                    <div class="single-footer-widget section_padding_0_130">
+                        <!-- Widget Title-->
+                        <h5 class="widget-title">Contactanos</h5>
+                        <!-- Footer Menu-->
+                        <div class="footer_menu">
+                            <ul>
+                                <li><a href="#">Términos &amp; Condiciones</a></li>
+                                <li><a href="#">Centro de Ayuda</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </footer>
-</div>
-{%endblock%}
-{%block scripts%}
-{%endblock%}
+
+</body>
+
+</html>
