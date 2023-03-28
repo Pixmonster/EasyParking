@@ -54,7 +54,7 @@ class Reserva(models.Model):
     fecha_hora = models.DateTimeField('fecha de reserva', auto_now=True, auto_now_add=False)
     id_usuario_fk = models.ForeignKey(Usuario, null=False, blank=False,on_delete=models.CASCADE)
     id_parqueadero_fk = models.ForeignKey(Parqueadero, null=False, blank=False,on_delete=models.CASCADE)
-    id_estado_fk = models.ForeignKey(Estado, null=False,blank=False,default=3,on_delete=models.CASCADE)
+    id_estado_fk = models.ForeignKey(Estado, null=False,blank=False,on_delete=models.CASCADE)
     class Meta:
         db_table='reserva'
 
