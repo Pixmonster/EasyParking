@@ -35,35 +35,33 @@
 
 
     <div class="container">
-        {% for parklist in parklist %}
+        {% for soli in soli %}
         <div class="card mb-3">
-
             <div class="card-body">
-                <h3 class="card-title text-center">{{parklist.nombre_park}}</h3>
-            </br>
+                <h3 class="card-title">{{soli.id_usuario_fk.nombre_usu}}</h3>
                 <div class="row">
                     <div class="col">
-                        <h6>Dirección: {{parklist.direccion}}</h6>
-                        <span>Precio/hora${{parklist.precio_hora}}</span></br>
-                        <span>Precio/dia: ${{parklist.precio_dia}}</span><br/>
-                        <span>Precio/mes: ${{parklist.precio_mes}}</span><br/><BR>
-                        <span>Telefono: {{parklist.tel_park}}</span><br/><BR>
-                        <a href="{% url 'actualizarparqueadero'%}?id={{parklist.id}}" class="btn btn-outline-warning">Editar</a>
-                        <buttom onclick="BorrarParqueadero('{{parklist.nombre_park}}', '{{parklist.id}}');" class="btn btn-outline-danger">Eliminar</buttom>
-                        <a href="{% url 'solicitudes'%}?park_id={{parklist.id}}" class="btn btn-outline-success">Solicitudes</a>
+                        <h6>Placa del vehiculo: {{soli.placa_veh}}</h6>
+                        <span>Cantidad de tiempo: {{soli.cantidad_reserva}} {{soli.tipo_reserva}}(s)</span><br>
+                        <span>Fecha solicitud: {{ soli.fecha_hora|date:'d-M-Y' }} a las {{ soli.fecha_hora|time:'h:ia' }}</span><br>
+
                     </div>
                     <div class="col">
-                        <img src="data:image/png;base64,{{parklist.get_imagen_park_base64}}"
-                            style="height: auto; width:500px;" />
-                    </div>
 
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <button type="submit" name="btn_aceptar" class="btn btn-outline-success">ACEPTAR</button>
+                        <button type="submit" name="btn_rechazar" class="btn btn-outline-danger">RECHAZAR</button>
+                    <input type="hidden" value="{{soli.id}}" name="soli_id">
+                    </form>
+
+                    </div>
                 </div>
             </div>
         </div>
         {% endfor %}
-    </div>
-
-    <!-- footer -->
+</div>
+        <!-- footer -->
     <footer class="footer_area section_padding_130_0">
         <div class="container">
             <div class="row">
@@ -125,13 +123,7 @@
             </div>
         </div>
     </footer>
-    <script>
-    function BorrarParqueadero(nombre, id){
-        var resp = confirm("Seguro desea borrar el parqueadero: " + nombre)
-        if (resp) {
-          window.location.href="{% url 'delete_park'%}?id=" + id}
-      }
-    </script>
+
 </body>
 
 </html>

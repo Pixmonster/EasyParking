@@ -31,6 +31,22 @@ class Parqueadero(models.Model):
     def get_imagen_park_base64(self):
         return base64.b64encode(self.imagen_park).decode()
 
+
+class Calificacion(models.Model):
+    cantidad_estrellas=models.FloatField()
+    comentarios=models.CharField(max_length=800)
+    fecha_hora = models.DateTimeField('fecha de calificacion', auto_now=True, auto_now_add=False)
+    id_usuario_fk = models.ForeignKey(Usuario, null=False, blank=False,on_delete=models.CASCADE)
+    id_parqueadero_fk = models.ForeignKey(Parqueadero, null=False, blank=False,on_delete=models.CASCADE)
+    class Meta:
+        db_table='calificacion'
+
+
+class Estado(models.Model):
+    nombre_estado=models.CharField(max_length=15)
+    class Meta:
+        db_table='estados'
+
 class Reserva(models.Model):
     tipo_reserva=models.CharField(max_length=6)
     placa_veh=models.CharField(max_length=6)
@@ -38,6 +54,7 @@ class Reserva(models.Model):
     fecha_hora = models.DateTimeField('fecha de reserva', auto_now=True, auto_now_add=False)
     id_usuario_fk = models.ForeignKey(Usuario, null=False, blank=False,on_delete=models.CASCADE)
     id_parqueadero_fk = models.ForeignKey(Parqueadero, null=False, blank=False,on_delete=models.CASCADE)
+    id_estado_fk = models.ForeignKey(Estado, null=False,blank=False,default=3,on_delete=models.CASCADE)
     class Meta:
         db_table='reserva'
 
@@ -49,16 +66,6 @@ class Reserva(models.Model):
         elif self.tipo_reserva=='mes':
             return self.cantidad_reserva*self.id_parqueadero_fk.precio_mes
     
-
-class Calificacion(models.Model):
-    cantidad_estrellas=models.FloatField()
-    comentarios=models.CharField(max_length=800)
-    fecha_hora = models.DateTimeField('fecha de calificacion', auto_now=True, auto_now_add=False)
-    id_usuario_fk = models.ForeignKey(Usuario, null=False, blank=False,on_delete=models.CASCADE)
-    id_parqueadero_fk = models.ForeignKey(Parqueadero, null=False, blank=False,on_delete=models.CASCADE)
-    class Meta:
-        db_table='calificacion'
-
     
     
 

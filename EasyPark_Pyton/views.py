@@ -62,6 +62,22 @@ def misparks(request):
     parklist= Parqueadero.objects.filter(id_usuario_fk=request.user.id)
     return render(request, 'misparks.html',{'parklist':parklist})
 
+def solicitudes(request):
+    if request.method=="POST":
+        if 'btn_aceptar' in request.POST:
+            reserva = Reserva.objects.get(id=request.POST.get('soli_id'))
+            reserva.id_estado_fk_id= 1
+            reserva.save()
+        
+        if 'btn_rechazar' in request.POST:
+            reserva = Reserva.objects.get(id=request.POST.get('soli_id'))
+            reserva.id_estado_fk_id= 2
+            reserva.save()
+    
+    soli = Reserva.objects.filter(id_parqueadero_fk_id= int(request.GET.get('park_id')), id_estado_fk=3)
+    return render(request, 'solicitudes.html',{'soli':soli})      
+
+
 def publicar(request):
     return render(request,'publicar.html')
 
@@ -274,6 +290,14 @@ def reservaparqueadero(request):
     
     else:
         return render(request,'reserva.html')
+    
+def terminarreserva(request):
+    id_reserva=int(request.GET.get('id'))
+    reserva = Reserva.objects.get(id=id_reserva)
+    reserva.id_estado_fk_id=4
+    reserva.save()
+
+    return redirect('../misreservas.html')
 
 #regioncalificacion
 def calificacion(request):
