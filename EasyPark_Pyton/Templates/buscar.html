@@ -73,11 +73,12 @@
               <h6>Precio/dia: ${{parqueadero.precio_dia}}</h6>
               <h6>Precio/mes: ${{parqueadero.precio_mes}}</h6>
             
-              
+              {% if user.id != parqueadero.id_usuario_fk_id %}
               <a href="{% url 'reservapark' %}?id={{parqueadero.id}}" class="btn btn-outline-success">Reserva</a>
-              <a href="{% url 'calificacion' %}" class="btn btn-outline-warning">Calificar</a>
               <a href="https://www.google.com/maps/dir//{{parqueadero.latitud}},{{parqueadero.longitud}}/@{{parqueadero.latitud}},{{parqueadero.longitud}},17z"
                 target="_blank" class="btn btn-outline-primary"> Ir </a>
+              {% endif %}
+              {% comment %} <a href="{% url 'calificacion' %}" class="btn btn-outline-warning">Calificar</a> {% endcomment %}
               {% if user.id == parqueadero.id_usuario_fk_id %}
               <a href="{% url 'actualizarparqueadero'%}?id={{parqueadero.id}}" class="btn btn-outline-warning">Editar</a>
               <buttom onclick="BorrarParqueadero('{{parqueadero.nombre_park}}', '{{parqueadero.id}}');" class="btn btn-outline-danger">Eliminar</buttom>

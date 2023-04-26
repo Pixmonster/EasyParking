@@ -46,7 +46,9 @@
                         <span>Cantidad de tiempo: {{reserva.cantidad_reserva}} {{reserva.tipo_reserva}}(s)</span><br>
                         <span>Precio total: ${{reserva.total_precio_reserva}}</span><br>
                         <span>Fecha solicitud: {{ reserva.fecha_hora|date:'d-M-Y' }} {{ reserva.fecha_hora|time:'h:ia' }}</span><br>
+                        <span>Teléfono: {{reserva.id_parqueadero_fk.tel_park}}</span><br>
                         <span>Estado de la solicitud: {{reserva.id_estado_fk.nombre_estado}}</span><br>
+
                         {% if reserva.id_estado_fk_id == 1 %}
                         <button type="button" onclick="TerminarReserva('{{reserva.id_parqueadero_fk.nombre_park}}','{{reserva.id}}')" name="btn_terminar" class="btn btn-outline-info">Terminar Reserva</button>
                         {% endif %}
@@ -125,7 +127,7 @@
     </footer>
 <script>
     function TerminarReserva(nombre, id){
-      var resp = confirm("¿Seguro desea terminar la reserva?: " + nombre)
+      var resp = confirm("¿Seguro desea terminar la reserva? " + nombre)
       if (resp) {
         window.location.href="{% url 'terminarreserva'%}?id=" + id;
       }
