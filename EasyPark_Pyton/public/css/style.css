@@ -108,14 +108,27 @@ code {
         width: 100%;
     }
 
-    #somos {
-        width: 200px !important
+    #section-1 {
+        width: 100%
     }
 
-    #funciona {
-        width: 200px !important
+    #section-2 {
+        width: 100%
+    }
+    
+    #section-3 {
+        width: 100%
+    }
+
+    #logo_wpp {
+        position: fixed;
+        width: 65px;
+        height: 65px;
+        left: 81%;
+        top: 85%
     }
 }
+
 
 .initial-color {
     background-color: rgb(56, 162, 255);
@@ -171,4 +184,19 @@ code {
 
 .sub_texto {
     font-family: 'Calibri';
+}
+
+@media (max-width: 768px) {
+    .video-container {
+      max-height: 5vh; /* Ajusta la altura vertical del contenedor del video según tus necesidades */
+    }
+    
+    .embed-responsive-custom {
+      padding-top: 0%; /* Ajusta el valor de "padding-top" para cambiar la relación de aspecto y hacer el video más pequeño verticalmente */
+    }
+  }
+
+  .card-deck {
+    max-height: calc(100vh - 20px); /* Ajusta el valor según tus necesidades */
+    overflow-y: auto;
 }

@@ -38,8 +38,8 @@
       </label>
       <ul>
         <li><a class="" href="{% url 'inicio' %}">Inicio</a></li>
-        <li class="nav-item dropdown">
-          <select id="comuna_seleccionada" class="form-select" aria-label="Default select example"
+        <li><div class="form-group">
+          <select id="comuna_seleccionada" class="form-select " aria-label="Default select example"
             onchange="CargarBuscarParqueadero(this)">
             {% for comuna in comunas_list %}
             {% if comuna.id == comuna_id %}
@@ -49,7 +49,8 @@
             {% endif %}
             {% endfor %}
           </select>
-        </li>
+        </div>
+        
         <!-- <li><button onclick="clear()" href="#" class="btn btn-warning">Limpiar Mapa</button></li> -->
       </ul>
     </div>
@@ -60,7 +61,8 @@
   <main>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-3 bg-secondary text-left">
+        <div class="col-md-3 col-lg-3 col-12 bg-secondary text-left">
+          <div class="card-deck">
           {% for parqueadero in parqueaderos %}
           <div class="card w-100">
             <div class="card-body">
@@ -87,23 +89,23 @@
           </div>
           {% endfor %}
         </div>
-        <div class="col-9 bg-secondary">
-        </div>
+      </div>
 
+        <div class="col-md-9 col-lg-9 col-12 bg-secondary">
         <div id="map">
-          <script async
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBX3DeJfi8RXiCYdZYipOLHjakBs8KM02w&callback=initMap">
-            </script>
+          <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBX3DeJfi8RXiCYdZYipOLHjakBs8KM02w&callback=initMap"> </script>
         </div>
       </div>
-      <!-- <div id="map2" style="width: 320px; height: 480px;"></div> -->
-      <!-- <div>
-        <input id="address" type="textbox" value="Sydney, NSW">
-        <input type="button" value="Encode" onclick="codeAddress()">
-      </div> -->
-
     </div>
+  </div>
   </main>
+
+  <style>
+    .card-deck {
+        max-height: calc(92vh - 20px); /* Ajusta el valor según tus necesidades */
+        overflow-y: auto;
+    }
+</style>
 
   <script>
     let geocoder;
