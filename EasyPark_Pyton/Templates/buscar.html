@@ -62,36 +62,36 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-3 col-lg-3 col-12 bg-secondary text-left">
-          <div class="card-deck">
-          {% for parqueadero in parqueaderos %}
-          <div class="card w-100">
-            <div class="card-body">
-              <h4 class="card-title">{{parqueadero.nombre_park}}</h4>
-              <a href="#" style="color: gray;"
-                onclick="MostrarMarcador('{{parqueadero.longitud}}', '{{parqueadero.latitud}}', '{{parqueadero.nombre_park}}', '{{parqueadero.tel_park}}')">{{parqueadero.direccion}}</a>
-              </br>
-            </br>
-              <h6>Precio/hora:${{parqueadero.precio_hora}}</h6>
-              <h6>Precio/dia: ${{parqueadero.precio_dia}}</h6>
-              <h6>Precio/mes: ${{parqueadero.precio_mes}}</h6>
-            
-              {% if user.id != parqueadero.id_usuario_fk_id %}
-              <a href="{% url 'reservapark' %}?id={{parqueadero.id}}" class="btn btn-outline-success">Reserva</a>
-              <a href="https://www.google.com/maps/dir//{{parqueadero.latitud}},{{parqueadero.longitud}}/@{{parqueadero.latitud}},{{parqueadero.longitud}},17z"
-                target="_blank" class="btn btn-outline-primary"> Ir </a>
-              {% endif %}
-              {% comment %} <a href="{% url 'calificacion' %}" class="btn btn-outline-warning">Calificar</a> {% endcomment %}
-              {% if user.id == parqueadero.id_usuario_fk_id %}
-              <a href="{% url 'actualizarparqueadero'%}?id={{parqueadero.id}}" class="btn btn-outline-warning">Editar</a>
-              <buttom onclick="BorrarParqueadero('{{parqueadero.nombre_park}}', '{{parqueadero.id}}');" class="btn btn-outline-danger">Eliminar</buttom>
-              {% endif %}
+          <div class="card-deck" id="cardDeck">
+            {% for parqueadero in parqueaderos %}
+            <div class="card w-100">
+              <div class="card-body">
+                <h4 class="card-title">{{parqueadero.nombre_park}}</h4>
+                <a href="#" style="color: gray;"
+                  onclick="MostrarMarcador('{{parqueadero.longitud}}', '{{parqueadero.latitud}}', '{{parqueadero.nombre_park}}', '{{parqueadero.tel_park}}')">{{parqueadero.direccion}}</a>
+                <br /><br />
+                <h6>Precio/hora: ${{parqueadero.precio_hora}}</h6>
+                <h6>Precio/día: ${{parqueadero.precio_dia}}</h6>
+                <h6>Precio/mes: ${{parqueadero.precio_mes}}</h6>
+              
+                {% if user.id != parqueadero.id_usuario_fk_id %}
+                <a href="{% url 'reservapark' %}?id={{parqueadero.id}}" class="btn btn-outline-success">Reserva</a>
+                <a href="https://www.google.com/maps/dir//{{parqueadero.latitud}},{{parqueadero.longitud}}/@{{parqueadero.latitud}},{{parqueadero.longitud}},17z"
+                  target="_blank" class="btn btn-outline-primary">Ir</a>
+                {% endif %}
+                
+                {% if user.id == parqueadero.id_usuario_fk_id %}
+                <a href="{% url 'actualizarparqueadero'%}?id={{parqueadero.id}}" class="btn btn-outline-warning">Editar</a>
+                <button onclick="BorrarParqueadero('{{parqueadero.nombre_park}}', '{{parqueadero.id}}');" class="btn btn-outline-danger">Eliminar</button>
+                {% endif %}
+              </div>
             </div>
+            {% endfor %}
           </div>
-          {% endfor %}
+          <button class="btn btn-primary d-sm-none" onclick="toggleCards()">Mostrar/Esconder Parqueaderos</button>
         </div>
-      </div>
 
-        <div class="col-md-9 col-lg-9 col-12 bg-secondary">
+        <div class="col-lg-9 order-lg-1 col-sm-12 bg-secondary">
         <div id="map">
           <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBX3DeJfi8RXiCYdZYipOLHjakBs8KM02w&callback=initMap"> </script>
         </div>
@@ -104,6 +104,14 @@
     .card-deck {
         max-height: calc(92vh - 20px); /* Ajusta el valor según tus necesidades */
         overflow-y: auto;
+    }
+
+    @media (max-width: 767px) {
+      #map {
+        left: 0px;
+        width: 100%;
+        height: 85%;
+      }
     }
 </style>
 
@@ -155,6 +163,11 @@
         let id_comuna_select = document.querySelector('#comuna_seleccionada').options[document.querySelector('#comuna_seleccionada').selectedIndex].value;
         window.location.href="{% url 'delete_park'%}?id=" + id + "&comuna=" + id_comuna_select;
       }
+    }
+
+    function toggleCards() {
+      var cardDeck = document.getElementById('cardDeck');
+      cardDeck.classList.toggle('d-none');
     }
   </script>
 
