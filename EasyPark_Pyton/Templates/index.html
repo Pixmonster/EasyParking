@@ -88,17 +88,17 @@
               <!--El selector de municipio-->
               <select class="form-control text-center" style="font-family:calibri;" name="" id="comuna_seleccionada">
                 <option value="" disabled selected>Seleccione una comuna de Medellín</option>
-              
+              <option value="-1">Cerca de mi</option>
                 {% for comuna in comunas_list %}
                 <option value="{{comuna.id}}">{{comuna.nombre_comu}}</option>
                 {% endfor %}
               </select>
               
-              {% if request.user is not None and request.user.is_authenticated %}
-              <button class="btn btn-primary" onclick="CargarBuscarParqueadero()">Buscar</button>
-              {% else %}
+              <button class="btn btn-primary m-2"  onclick="CargarBuscarParqueadero()">Buscar</button>
+              <!-- {% if request.user is not None and request.user.is_authenticated %} -->
+              <!-- {% else %}
               <a class="btn btn-primary m-2" href="login.html">Buscar</a>
-              {% endif %}
+              {% endif %} -->
             </div>
           </div>
         </div>

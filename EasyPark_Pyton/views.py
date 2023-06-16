@@ -29,8 +29,11 @@ def inicio(request):
 def buscar(request):
     comunas = Comuna.objects.all()
     id = int(request.GET.get('comuna'))
-    parqueaderos = Parqueadero.objects.filter(id_comu_fk=id)
-    return render(request,'buscar.html', { "comuna_id": id, 'comunas_list': comunas, "parqueaderos": parqueaderos } )
+    if id == -1:
+        id = int(request.GET.get('comuna','latitude','longitude'))        
+    else:
+        parqueaderos = Parqueadero.objects.filter(id_comu_fk=id)
+        return render(request,'buscar.html', { "comuna_id": id, 'comunas_list': comunas, "parqueaderos": parqueaderos } )
 
 def fnLogin(request):
     if request.method=="POST":
