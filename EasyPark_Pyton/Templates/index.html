@@ -266,32 +266,35 @@
   <script src="{% static 'js/navbar.js' %}"></script>
   <script>
     function CargarBuscarParqueadero() {
-      let id_comuna_select = document.querySelector('#comuna_seleccionada').selectedIndex;
+      let id_comuna_select = document.querySelector('#comuna_seleccionada').value;
       if (id_comuna_select==-1) {
-        getLocation()
-        window.location.href = "{% url 'buscar'%}?comuna=" + id_comuna_select & latitude & longitude;
+        getLocation(id_comuna_select)
+        
       }else{
         window.location.href = "{% url 'buscar'%}?comuna=" + id_comuna_select;
       }
     }
 
 
-
-    function getLocation() {
-        if (navigator.geolocation) {
-            return navigator.geolocation.getCurrentPosition(getLocation);
-        } else {
-            console.log("Geolocation is not supported by this browser.");
-        }
+    
+    function getLocation(id_comuna_select) {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition((position) => {
+            window.location.href = "{% url 'buscar'%}?comuna=" + id_comuna_select + "&latitud="+ position.coords.latitude +"&longitud="+position.coords.longitude;
+          }
+        );
+      } else {
+          console.log("Geolocation is not supported by this browser.");
+      }
     }
 
     // Función para enviar la ubicación al servidor
-    function getLocation(position) {
-        return {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        };
-    }
+    // function getLocation(position) {
+    //     coords = {
+    //       latitude: position.coords.latitude,
+    //       longitude: position.coords.longitude
+    //     };
+    // }
   </script>
 </body>
 

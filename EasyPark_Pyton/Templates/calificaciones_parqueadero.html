@@ -53,27 +53,16 @@
             <div class="col-sm-6">
               <img src="data:image/png;base64,{{opinion.imagen_park}}" style="height: auto; width:250px;" />
             </div>
-            <div class="input-field col col-sm-6 text-center">
+            <div class="input-field col col-sm-6 text-end">
+              <span style="font-size: x-small;">{{opinion.fechaHora}}</span>
               <textarea disabled cols="38" rows="7">{{opinion.comentarios}}</textarea>
-            </div>
-            <form action="">
-              <input type="hidden" value="{{opinion.id}}">
-              <div class="row"><div class="col-2">
-                <a href="{% url 'editaropinion'%}?id={{opinion.id}}" class="btn btn-outline-warning">Editar</a>
-              </div><div class="col-2">
-                <buttom onclick="deleteopinion('{{opinion.id}}');"
-                class="btn btn-outline-danger">Eliminar</buttom>
-              </div>
-            </form>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- 
-        <div>
-          {{opinion}}
-        </div> -->
+
+
     {% endfor %}
 
   </div>
@@ -140,12 +129,13 @@
     </div>
   </footer>
   <script>
-    function deleteopinion(id){
-        var resp = confirm("Seguro desea borrar el comentario?")
-        if (resp) {
-          window.location.href="{% url 'deleteopinion'%}?id=" + id}
+    function deleteopinion(id) {
+      var resp = confirm("Seguro desea borrar el comentario?")
+      if (resp) {
+        window.location.href = "{% url 'deleteopinion'%}?id=" + id
       }
-    </script>
- </body>
+    }
+  </script>
+</body>
 
 </html>

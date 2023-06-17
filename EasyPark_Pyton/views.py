@@ -1,4 +1,6 @@
 from ast import If
+from geopy.distance import distance
+from geopy.point import Point
 import json
 from django.core.files.base import ContentFile
 import base64
@@ -35,10 +37,41 @@ def buscar(request):
     comunas = Comuna.objects.all()
     id = int(request.GET.get('comuna'))
     if id == -1:
-        id = int(request.GET.get('comuna','latitude','longitude'))        
+        latitud = float(request.GET.get('latitud'))
+        longitud = float(request.GET.get('longitud')) 
+
+        puntos = coordcerca(latitud, longitud)
+        lista_ids = []
+
+        for punto in puntos:
+            comunas_cerca = Comuna.objects.filter(long_east__gte=punto[1], long_west__lte=punto[1], lat_north__gte=punto[0], lat_south__lte=punto[0]).all()
+            lista_ids= lista_ids+[comuna.id for comuna in comunas_cerca]
+        if len(lista_ids) > 0:
+            parqueaderos = Parqueadero.objects.filter(id_comu_fk__in = lista_ids)
+        else:
+            parqueaderos = Parqueadero.objects.all()
+
+     
+        
+        return render(request,'buscar.html', { "comuna_id": id, 'comunas_list': comunas, "parqueaderos": parqueaderos } )
+        
     else:
         parqueaderos = Parqueadero.objects.filter(id_comu_fk=id)
         return render(request,'buscar.html', { "comuna_id": id, 'comunas_list': comunas, "parqueaderos": parqueaderos } )
+
+def coordcerca(latitud,longitud):
+    
+# Crear el punto de referencia
+    punto_referencia = Point(latitud, longitud)
+
+# Calcular las coordenadas dentro del radio de 10 km
+    coordenadas_circulo = []
+    for brng in range(0, 360, 10):
+        punto = distance(kilometers=1).destination(punto_referencia, brng)
+        coordenadas_circulo.append((punto.latitude, punto.longitude))
+    return coordenadas_circulo
+
+
 
 def fnLogin(request):
     if request.method=="POST":
@@ -396,3 +429,39 @@ def editaropinion(request):
         return render(request,'editaropinion.html', {'opinion': opinion})
     
 
+def deleteopinion(request):
+    id = int(request.GET.get('id'))
+    url = 'http://localhost:8080/deletecomment/'+str(id)
+    response = requests.delete(url)
+
+    if response.status_code == 204:
+       
+        return render('misopiniones.html')
+    else:
+        return redirect('misopiniones.html')
+
+    
+
+
+def calificaciones_parqueadero(request):
+    
+    # Obtener el ID del usuario autenticado
+    id_park = int(request.GET.get('id'))
+    api_url = 'http://localhost:8080/calificacionesParqueadero/'+ str(id_park)  
+
+    # Realizar la solicitud a la API con los parámetros
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        opiniones = response.json()  # Convertir la respuesta JSON a una lista de opiniones
+
+        for opinion in opiniones:
+            id= opinion['idParqueaderoFkId']
+            parqueadero=Parqueadero.objects.get(id=id)
+            opinion["nombre_park"] =(parqueadero.nombre_park)
+            opinion["imagen_park"] = base64.b64encode(parqueadero.imagen_park).decode()
+            
+        return render(request, 'calificaciones_parqueadero.html', {'opiniones': opiniones})
+    else:
+        error_message = 'No se pudo obtener la lista de opiniones'
+        return render(request, 'calificaciones_parqueadero.html', {'error_message': error_message})

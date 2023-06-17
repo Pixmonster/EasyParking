@@ -41,6 +41,11 @@
         <li><div class="form-group">
           <select id="comuna_seleccionada" class="form-select " aria-label="Default select example"
             onchange="CargarBuscarParqueadero(this)">
+            {% if comuna_id == -1 %}
+            <option selected value="{{comuna_id}}">Cerca de mi</option>
+            {% else %}
+            <option value="-1">Cerca de mi</option>
+            {% endif %}
             {% for comuna in comunas_list %}
             {% if comuna.id == comuna_id %}
             <option selected value="{{comuna.id}}">{{comuna.nombre_comu}}</option>
@@ -69,7 +74,11 @@
                 <h4 class="card-title">{{parqueadero.nombre_park}}</h4>
                 <a href="#" style="color: gray;"
                   onclick="MostrarMarcador('{{parqueadero.longitud}}', '{{parqueadero.latitud}}', '{{parqueadero.nombre_park}}', '{{parqueadero.tel_park}}')">{{parqueadero.direccion}}</a>
-                <br /><br />
+                <br /> <br>
+                {% if parqueadero.Calificacion.exists %}
+                <h6>Estrellas: <a href="{% url 'calificacionesParqueadero' %}?id={{parqueadero.id}}">{{parqueadero.get_promedio_calificacion|floatformat:1}}</a></h6>
+                <br>
+                {% endif %}
                 <h6>Precio/hora: ${{parqueadero.precio_hora}}</h6>
                 <h6>Precio/día: ${{parqueadero.precio_dia}}</h6>
                 <h6>Precio/mes: ${{parqueadero.precio_mes}}</h6>
@@ -151,7 +160,13 @@
     }
     function CargarBuscarParqueadero(tag) {
       let id_comuna_select = tag[tag.selectedIndex].value;
-      window.location.href = "{% url 'buscar'%}?comuna=" + id_comuna_select;
+
+      if (id_comuna_select==-1) {
+        getLocation(id_comuna_select)
+        
+      }else{
+        window.location.href = "{% url 'buscar'%}?comuna=" + id_comuna_select;
+      }
     }
     function clear() {
       marker.setMap(null);
@@ -168,6 +183,17 @@
     function toggleCards() {
       var cardDeck = document.getElementById('cardDeck');
       cardDeck.classList.toggle('d-none');
+    }
+
+    function getLocation(id_comuna_select) {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition((position) => {
+            window.location.href = "{% url 'buscar'%}?comuna=" + id_comuna_select + "&latitud="+ position.coords.latitude +"&longitud="+position.coords.longitude;
+          }
+        );
+      } else {
+          console.log("Geolocation is not supported by this browser.");
+      }
     }
   </script>
 

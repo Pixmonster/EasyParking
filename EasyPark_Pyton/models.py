@@ -2,6 +2,8 @@ import base64
 from django.db import connections
 from django.db import models
 from users.models import  Usuario
+from django.db.models import Avg
+
 
 class Comuna(models.Model):
     nombre_comu = models.CharField(max_length=40)
@@ -30,6 +32,10 @@ class Parqueadero(models.Model):
         
     def get_imagen_park_base64(self):
         return base64.b64encode(self.imagen_park).decode()
+    
+    def get_promedio_calificacion(self):
+        promedio = self.Calificacion.aggregate(promedio=Avg('cantidad_estrellas'))['promedio']
+        return promedio
 
 
 class Calificacion(models.Model):
@@ -37,7 +43,7 @@ class Calificacion(models.Model):
     comentarios=models.CharField(max_length=800)
     fecha_hora = models.DateTimeField('fecha de calificacion', auto_now=True, auto_now_add=False)
     id_usuario_fk = models.ForeignKey(Usuario, null=False, blank=False,on_delete=models.CASCADE)
-    id_parqueadero_fk = models.ForeignKey(Parqueadero, null=False, blank=False,on_delete=models.CASCADE)
+    id_parqueadero_fk = models.ForeignKey(Parqueadero, null=False, blank=False,on_delete=models.CASCADE, related_name="Calificacion")
     class Meta:
         db_table='calificacion'
 
