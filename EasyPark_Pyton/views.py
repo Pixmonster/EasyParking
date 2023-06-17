@@ -1,6 +1,8 @@
 from ast import If
+import json
 from django.core.files.base import ContentFile
 import base64
+import requests
 from multiprocessing import context
 from re import template
 from django.http import HttpResponse,HttpResponseRedirect
@@ -9,10 +11,13 @@ from django.db import connection
 from django.shortcuts import render,redirect, reverse
 from django.contrib import messages
 from django.contrib.auth import login,logout
+from EasyPark_Pyton.Templates.DTO.calificaciondto import CalificacionDto
 from EasyPark_Pyton.models import  Comuna, Parqueadero,Reserva,Calificacion
 from users.models import Usuario
 from django.core.mail import send_mail
 from django.conf import settings
+from django.core import serializers
+
 
 def MapView(request):
     return render(request,'map.html')
@@ -42,13 +47,12 @@ def fnLogin(request):
         try:
             user = Usuario.objects.get(email_usu=username, password=inputpassword)
         except Usuario.DoesNotExist:
-            messages.error(request, "Usuario o contraseña no válidos")
             return render(request,'login.html')
         if user is not None:
             login(request, user)
             return redirect ('inicio')
         else:
-            messages.error(request, "Usuario o contraseña no válidos")
+            
             return render(request,'login.html')
     else:
         return render(request,'login.html')
@@ -99,7 +103,7 @@ def registrousuario(request):
             usuario.save()
             # insertar=connection.cursor()
             # insertar.execute("call insertarusuario('"+usuario.nombre_usu+"','"+usuario.apellido+"','"+usuario.cedula+"','"+usuario.email_usu+"','"+usuario.tel_usu+"','"+usuario.contrasenna+"')")
-            messages.success(request, "El usuario: " +usuario.nombre_usu+ " " +usuario.apellido+ " se guardó con exito")
+            #messages.success(request, "El usuario: " +usuario.nombre_usu+ " " +usuario.apellido+ " se guardó con exito")
             return render(request,'registro.html')
     else:
         return render(request,'registro.html')
@@ -299,22 +303,96 @@ def terminarreserva(request):
     reserva = Reserva.objects.get(id=id_reserva)
     reserva.id_estado_fk_id=4
     reserva.save()
-
-    return redirect('../misreservas.html')
+    url = reverse('calificacion') + '?idParqueadero=' + str(reserva.id_parqueadero_fk_id)
+    return redirect(url)
 
 #regioncalificacion
-def calificacion(request):
-    if request.method=="POST":
-         if request.POST.get('estrellas') and request.POST.get('comentarios'):
-            calificacion=Calificacion()
-            calificacion.estrellas=request.POST.get('estrellas')
-            calificacion.comentarios=request.POST.get('comentarios')
-            #calificacion.save()
-            insertar=connection.cursor()
-            insertar.callproc("insertarcalificacion", [calificacion.estrellas,calificacion.comentarios,request.user.id])
-            insertar.close()
-            messages.success(request, "Has hecho la calificacion")
-            return render(request,'calificacion.html')
+# def calificacion(request):
+#     if request.method=="POST":
+#          if request.POST.get('estrellas') and request.POST.get('comentarios'):
+#             calificacion=Calificacion()
+#             calificacion.estrellas=request.POST.get('estrellas')
+#             calificacion.comentarios=request.POST.get('comentarios')
+#             #calificacion.save()
+#             insertar=connection.cursor()
+#             insertar.callproc("insertarcalificacion", [calificacion.estrellas,calificacion.comentarios,request.user.id])
+#             insertar.close()
+#             messages.success(request, "Has hecho la calificacion")
+#             return render(request,'calificacion.html')
     
-    else: 
-        return render(request,'calificacion.html')
+#     else: 
+#         return render(request,'calificacion.html')
+
+def calificacion(request):
+    idparqueadero_fk = request.GET.get('idParqueadero')
+    if request.method=="POST":
+        estrellas = request.POST.get('estrellas')
+        comentarios = request.POST.get('comentarios')
+        idparqueadero_fk = request.GET.get('idParqueadero')
+        idusuario_fk = (request.user.id)
+        if estrellas and idparqueadero_fk and idusuario_fk:
+            calificacion = CalificacionDto(comentarios=comentarios, cantidadEstrellas = estrellas, idParqueaderoFkId= idparqueadero_fk,idUsuarioFk=idusuario_fk)
+            url = 'http://localhost:8080/savecomment'
+            json_data = json.dumps(calificacion.__dict__)
+            response = requests.post(url, json_data, headers={'Content-Type': 'application/json'})
+            if response.status_code == 200:
+                return redirect('../misreservas.html')
+            else:
+                return render(request,'calificacion.html', {'response':response.text})
+                
+        
+        else:
+            return render(request,'calificacion.html', {'response': "Formulario incompleto o no válido"})
+            
+    else:
+        return render(request,'calificacion.html', {'idparqueadero': idparqueadero_fk})
+    
+    
+def misopiniones(request):
+    
+    # Obtener el ID del usuario autenticado
+    user_id = request.user.id
+    api_url = 'http://localhost:8080/misopiniones/'+ str(user_id)  
+
+    # Realizar la solicitud a la API con los parámetros
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        opiniones = response.json()  # Convertir la respuesta JSON a una lista de opiniones
+
+        for opinion in opiniones:
+            id= opinion['idParqueaderoFkId']
+            parqueadero=Parqueadero.objects.get(id=id)
+            opinion["nombre_park"] =(parqueadero.nombre_park)
+            opinion["imagen_park"] = base64.b64encode(parqueadero.imagen_park).decode()
+            
+        return render(request, 'misopiniones.html', {'opiniones': opiniones})
+    else:
+        error_message = 'No se pudo obtener la lista de opiniones'
+        return render(request, 'misopiniones.html', {'error_message': error_message})
+            
+
+def editaropinion(request):
+    id = int(request.GET.get('id'))
+    opinion=Calificacion.objects.get(id=id)
+    if request.method=="POST":
+        estrellas = request.POST.get('estrellas')
+        comentarios = request.POST.get('comentarios')
+        if estrellas:
+            calificacion = CalificacionDto(comentarios=comentarios, cantidadEstrellas = estrellas, idParqueaderoFkId= 0,idUsuarioFk=0)
+            url = 'http://localhost:8080/updatecomment/'+ str(id)
+            json_data = json.dumps(calificacion.__dict__)
+            response = requests.put(url, json_data, headers={'Content-Type': 'application/json'})
+            if response.status_code == 200:
+                return redirect('../misopiniones.html')
+            else:
+                return render(request,'editaropinion.html', {'opinion': opinion, 'response': response.text})
+                
+        
+        else:
+            return render(request,'editaropinion.html', {'opinion': opinion,'response': "Formulario incompleto o no válido"})
+            
+    else:
+        return render(request,'editaropinion.html', {'opinion': opinion})
+    
+

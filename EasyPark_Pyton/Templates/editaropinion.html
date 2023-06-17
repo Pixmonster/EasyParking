@@ -10,7 +10,7 @@
 {%block content%}
 <div class="container" style="padding: 20px;">
   <center>
-    <h3 class="indigo-text">Calificacion Parqueadero</h3>
+    <h3 class="indigo-text">Editar calificacion</h3>
     <br></br>
   </center>
   <div class="container">
@@ -19,21 +19,20 @@
       <form action="" class="col s12 " method="post">
         {% csrf_token %}
 
-        <input type="hidden" name="idparqueadero" value="{{idparqueadero}}">
         
         <div class="row">
           <div class="input-field col col-sm-12">
             <center>
               <h5 class="indigo-text">Estrellas</h5>
             </center>
-            <input type="range" class="form-range " min="0" max="5" step="1" id="customRange3" name="estrellas">
+            <input type="range" value="{{opinion.cantidadEstrellas}}" class="form-range " min="0" max="5" step="1" id="customRange3" name="estrellas">
           </div>
         </div>
         <div class="row">
           <div class="input-field col col-sm-12">
             <div class="form-floating">
               <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                style="height: 200px" name="comentarios" class="validate" required></textarea>
+                style="height: 200px" name="comentarios" class="validate" required>{{opinion.comentarios}}</textarea>
               <label for="floatingTextarea2">Comentarios</label>
             </div>
           </div>

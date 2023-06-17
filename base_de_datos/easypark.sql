@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-03-2023 a las 02:14:32
+-- Tiempo de generación: 17-06-2023 a las 02:20:29
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.0
 
@@ -177,11 +177,11 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 --
 
 CREATE TABLE `calificacion` (
-  `ID_CALIFICACION` int(11) NOT NULL,
+  `ID` int(11) NOT NULL,
   `CANTIDAD_ESTRELLAS` int(11) DEFAULT NULL CHECK (`CANTIDAD_ESTRELLAS` >= 0 and `CANTIDAD_ESTRELLAS` <= 5),
-  `COMENTARIOS` varchar(1000) DEFAULT 'SIN COMENTARIOS',
-  `FECHA_HORA` datetime DEFAULT current_timestamp(),
-  `ID_USUARIO_FK` int(11) DEFAULT NULL,
+  `comentarios` varchar(255) DEFAULT NULL,
+  `fecha_hora` datetime(6) DEFAULT NULL,
+  `ID_USUARIO_FK_ID` int(11) DEFAULT NULL,
   `ID_PARQUEADERO_FK_ID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -189,32 +189,10 @@ CREATE TABLE `calificacion` (
 -- Volcado de datos para la tabla `calificacion`
 --
 
-INSERT INTO `calificacion` (`ID_CALIFICACION`, `CANTIDAD_ESTRELLAS`, `COMENTARIOS`, `FECHA_HORA`, `ID_USUARIO_FK`, `ID_PARQUEADERO_FK_ID`) VALUES
-(54, 4, 'asda', '2023-03-27 10:35:10', 7, NULL),
-(55, 4, 'asda', '2023-03-27 10:35:10', 7, NULL),
-(56, 4, 'asda', '2023-03-27 10:35:11', 7, NULL),
-(57, 4, 'asda', '2023-03-27 10:35:11', 7, NULL),
-(58, 4, 'asda', '2023-03-27 10:35:11', 7, NULL),
-(59, 4, 'asda', '2023-03-27 10:35:11', 7, NULL),
-(60, 4, 'asda', '2023-03-27 10:35:11', 7, NULL),
-(61, 4, 'asda', '2023-03-27 10:35:12', 7, NULL),
-(62, 4, 'asda', '2023-03-27 10:35:18', 7, NULL),
-(63, 4, 'asda', '2023-03-27 10:35:18', 7, NULL),
-(64, 4, 'asda', '2023-03-27 10:35:19', 7, NULL),
-(65, 4, 'asda', '2023-03-27 10:35:19', 7, NULL),
-(66, 4, 'asda', '2023-03-27 10:35:19', 7, NULL),
-(67, 4, 'asda', '2023-03-27 10:35:19', 7, NULL),
-(68, 4, 'asda', '2023-03-27 10:35:19', 7, NULL),
-(69, 4, 'asda', '2023-03-27 10:35:20', 7, NULL),
-(70, 4, 'asda', '2023-03-27 10:35:20', 7, NULL),
-(71, 4, 'asda', '2023-03-27 10:35:20', 7, NULL),
-(72, 4, 'asda', '2023-03-27 10:35:20', 7, NULL),
-(73, 4, 'asda', '2023-03-27 10:35:25', 7, NULL),
-(74, 4, 'asda', '2023-03-27 10:35:25', 7, NULL),
-(75, 4, 'asda', '2023-03-27 10:35:25', 7, NULL),
-(76, 4, 'asda', '2023-03-27 10:35:25', 7, NULL),
-(77, 4, 'asda', '2023-03-27 10:35:26', 7, NULL),
-(78, 4, 'asda', '2023-03-27 10:35:26', 7, NULL);
+INSERT INTO `calificacion` (`ID`, `CANTIDAD_ESTRELLAS`, `comentarios`, `fecha_hora`, `ID_USUARIO_FK_ID`, `ID_PARQUEADERO_FK_ID`) VALUES
+(116, 3, 'ji', '2023-06-16 13:53:23.000000', 1, 1),
+(117, 3, 'dsfdsfs', '2023-06-16 14:02:05.000000', 1, 1),
+(118, 0, 'Muy mal parqueadero!!!', '2023-06-16 19:13:18.000000', 1, 6);
 
 -- --------------------------------------------------------
 
@@ -354,6 +332,7 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+('baec4z13jsnwsmpwmlsnp2zrec28wn9x', '.eJxVjEEOwiAURO_C2hAQPnxcuvcMBPggVQNJaVfGu9smXehuMu_NvJkP61L9OvLsJ2IXJtnpt4shPXPbAT1Cu3eeelvmKfJd4Qcd_NYpv66H-3dQw6jbWglliiaM5IqUW9TkDILAKCiFKLWCAtYgnQHJQBEKNQhrwWVlMxH7fAHL8Tcv:1qAJYx:FE8EZVjbn-S0V2y8nY_ChkgWN7ZKXhwrx3JxSHi4vPc', '2023-07-01 00:13:07.585556'),
 ('f7mtovpd7n5a2eybta41evp0dt2dtjfb', '.eJxVjEEOwiAURO_C2hAQPnxcuvcMBPggVQNJaVfGu9smXehuMu_NvJkP61L9OvLsJ2IXJtnpt4shPXPbAT1Cu3eeelvmKfJd4Qcd_NYpv66H-3dQw6jbWglliiaM5IqUW9TkDILAKCiFKLWCAtYgnQHJQBEKNQhrwWVlMxH7fAHL8Tcv:1pf5hB:wh1V8qdg0ycAzXTwixc68Nwoxvgt2R3IZWk68G-Yx8E', '2023-04-05 21:08:33.972994'),
 ('luqn6iv8p47mb1xlbez8c27dhyxhk59f', '.eJxVjEEOwiAURO_C2hAQPnxcuvcMBPggVQNJaVfGu9smXehuMu_NvJkP61L9OvLsJ2IXJtnpt4shPXPbAT1Cu3eeelvmKfJd4Qcd_NYpv66H-3dQw6jbWglliiaM5IqUW9TkDILAKCiFKLWCAtYgnQHJQBEKNQhrwWVlMxH7fAHL8Tcv:1pgwXw:i2dF-xSf5Kk8Fy-ROyjnLhRPEPcS4rODNmcV5JC6rGY', '2023-04-10 23:46:40.266705'),
 ('mxdwmtuzxwiixmw294euc1bgpgpc2i4f', '.eJxVjMEOwiAQBf-FsyEgLCwevfcbCLAgVUOT0p6M_64kPejt5c1kXsyHfat-73n1M7ELU-z0-8WQHrkNQPfQbgtPS9vWOfKh8IN2Pi2Un9fD_QvU0OvICmWKJozkipTfqckZBIFRUApRagUFrEE6A5KBIhRqENaCy8pmIvb-AM0jNzE:1pa8gJ:cIDKcduZck9PzETjZxqnQB4Irl5RTm2ln8FyUfFLlyk', '2023-03-23 05:19:11.373334'),
@@ -459,9 +438,22 @@ CREATE TABLE `reserva` (
 
 INSERT INTO `reserva` (`ID`, `TIPO_RESERVA`, `PLACA_VEH`, `CANTIDAD_RESERVA`, `FECHA_HORA`, `ID_USUARIO_FK_ID`, `ID_PARQUEADERO_FK_ID`, `ID_ESTADO_FK_ID`) VALUES
 (4, 'mes', 'rtb 20c', 1, '2023-03-23 16:24:55', 2, 9, 1),
-(8, 'hora', 'bub778', 2, '2023-03-24 07:25:49', 6, 1, 2),
-(10, 'mes', 'lkj123', 2, '2023-03-28 00:11:47', 1, 6, 4),
-(15, 'Hora', 'tnb135', 2, '2023-03-27 23:46:16', 1, 25, 2);
+(8, 'hora', 'bub778', 2, '2023-03-24 07:25:49', 6, 1, 1),
+(10, 'mes', 'lkj123', 2, '2023-06-16 19:05:02', 1, 6, 4),
+(15, 'Hora', 'tnb135', 2, '2023-03-27 23:46:16', 1, 25, 1),
+(16, 'Hora', 'RTB 20C', 5, '2023-06-16 18:57:03', 1, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `task`
+--
+
+CREATE TABLE `task` (
+  `id` bigint(20) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -506,8 +498,8 @@ CREATE TABLE `users_usuario` (
 --
 
 INSERT INTO `users_usuario` (`id`, `nombre_usu`, `apellido`, `cedula`, `email_usu`, `tel_usu`, `contrasenna`, `last_login`, `password`, `id_rol_fk_id`) VALUES
-(1, 'Jose Luis', 'Suarez Muñoz', '1022143865', 'joseluis.suarezmunoz7@gmail.com', '3005982123', '1234', '2023-03-27 23:46:40.207705', '1234', 2),
-(2, 'Sebas', 'Carmona', '1020444516', 's@g.com', '3042124578', '123', '2023-03-27 23:45:03.941081', '123', 2),
+(1, 'Jose Luis', 'Suarez Muñoz', '1022143865', 'joseluis.suarezmunoz7@gmail.com', '3005982123', '1234', '2023-06-17 00:13:07.509558', '1234', 2),
+(2, 'Sebas', 'Carmona', '1020444516', 's@g.com', '3042124578', '123', '2023-06-16 15:14:40.384474', '123', 2),
 (3, 'Yuner Mateo ', 'Amariles Osorio', '1022480457', 'ymamariles@misena.edu.co', '3026169592', '1234', NULL, '1234', 2),
 (6, 'Jose', 'Garcia', '1001250532', 'mono28h@gmail.com', '3023240258', 'jose123', '2023-03-27 16:58:04.178709', 'jose123', 2),
 (7, 'Mateo', 'Amariles', '1022142670', 'mateoamariles2304@gmail.com', '302363929', 'mateo123', '2023-03-27 15:56:29.800001', 'mateo123', 2),
@@ -543,9 +535,9 @@ ALTER TABLE `auth_permission`
 -- Indices de la tabla `calificacion`
 --
 ALTER TABLE `calificacion`
-  ADD PRIMARY KEY (`ID_CALIFICACION`),
+  ADD PRIMARY KEY (`ID`),
   ADD KEY `ID_PARQUEADERO_FK_ID` (`ID_PARQUEADERO_FK_ID`),
-  ADD KEY `ID_USUARIO` (`ID_USUARIO_FK`);
+  ADD KEY `ID_USUARIO` (`ID_USUARIO_FK_ID`);
 
 --
 -- Indices de la tabla `comunas`
@@ -607,6 +599,12 @@ ALTER TABLE `reserva`
   ADD KEY `ID_USUARIO_FK_ID` (`ID_USUARIO_FK_ID`);
 
 --
+-- Indices de la tabla `task`
+--
+ALTER TABLE `task`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `users_roles`
 --
 ALTER TABLE `users_roles`
@@ -628,7 +626,7 @@ ALTER TABLE `users_usuario`
 -- AUTO_INCREMENT de la tabla `calificacion`
 --
 ALTER TABLE `calificacion`
-  MODIFY `ID_CALIFICACION` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- AUTO_INCREMENT de la tabla `estados`
@@ -646,7 +644,13 @@ ALTER TABLE `parqueadero`
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT de la tabla `task`
+--
+ALTER TABLE `task`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `users_usuario`
@@ -663,7 +667,7 @@ ALTER TABLE `users_usuario`
 --
 ALTER TABLE `calificacion`
   ADD CONSTRAINT `calificacion_ibfk_1` FOREIGN KEY (`ID_PARQUEADERO_FK_ID`) REFERENCES `parqueadero` (`ID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `calificacion_ibfk_2` FOREIGN KEY (`ID_USUARIO_FK`) REFERENCES `users_usuario` (`id`);
+  ADD CONSTRAINT `calificacion_ibfk_2` FOREIGN KEY (`ID_USUARIO_FK_ID`) REFERENCES `users_usuario` (`id`);
 
 --
 -- Filtros para la tabla `parqueadero`

@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'js/jquery.min.js' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyParking</title>
+</head>
+
+<body>
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-lg sticky-top py-3 shadow-sm mb-5" style="background-color: rgb(39, 150, 248) ;">
+    <div class="container">
+      <a href="{% url 'inicio'%}" class="navbar-brand">
+        <!-- Logo Image -->
+        <img href="#" src="{% static 'img/Logo.png' %}" alt="logo" width="100" height="50" alt=""
+          class="d-inline-block align-middle mr-2">
+      </a>
+      <input type="checkbox" id="check">
+      <label for="check" class="checkbtn">
+        <i> <img src="{% static 'img/list.svg' %}" alt="Bootstrap" width="32" height="32"> </i>
+      </label>
+      <ul>
+        <li><a class="" href="{% url 'inicio'%}">Inicio</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <div class="container w-50">
+    {% for opinion in opiniones %}
+    <div class="card mb-3 ">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <h3 class="text-center">{{opinion.nombre_park}}</h3>
+          </div>
+          <div class="col-sm-6">
+            <center>
+              <h4>{{opinion.cantidadEstrellas}}</h4>
+              <h5 class="indigo-text">Estrellas</h5>
+            </center>
+
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <img src="data:image/png;base64,{{opinion.imagen_park}}" style="height: auto; width:250px;" />
+            </div>
+            <div class="input-field col col-sm-6 text-center">
+              <textarea disabled cols="38" rows="7">{{opinion.comentarios}}</textarea>
+            </div>
+            <form action="">
+              <input type="hidden" value="{{opinion.id}}">
+              <div class="row"><div class="col-2">
+                <a href="{% url 'editaropinion'%}?id={{opinion.id}}" class="btn btn-outline-warning">Editar</a>
+              </div><div class="col-2">
+                <buttom onclick="BorrarOpinion('{{opinion.id}}');"
+                class="btn btn-outline-danger">Eliminar</buttom>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 
+        <div>
+          {{opinion}}
+        </div> -->
+    {% endfor %}
+
+  </div>
+  <!-- footer -->
+  <footer class="footer_area section_padding_130_0">
+    <div class="container">
+      <div class="row">
+        <!-- Single Widget-->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="single-footer-widget section_padding_0_130">
+            <!-- Footer Logo-->
+            <div class="footer-logo mb-3"></div>
+            <p>La mejor página que existe para encontrar tu parqueadero.</p>
+            <!-- Copywrite Text-->
+            <div class="copywrite-text mb-5">
+              <p class="mb-0"><i class="lni-heart mr-1"></i><a class="ml-1"></a></p> <br><br>
+              <p>Jose Luis Suarez Muñoz <br>Yuner Mateo Amariles Osorio <br>Rosemberg Leandro Gomez</p>
+            </div>
+            <!-- Footer Social Area-->
+            <div></div>
+          </div>
+        </div>
+        <!-- Single Widget-->
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="single-footer-widget section_padding_0_130">
+            <!-- Widget Title-->
+            <h5 class="widget-title">Acerca</h5>
+            <!-- Footer Menu-->
+            <div class="footer_menu">
+              <ul>
+                <li><a href="#">Políticas</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Single Widget-->
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="single-footer-widget section_padding_0_130">
+            <!-- Widget Title-->
+            <h5 class="widget-title">Soporte</h5>
+            <!-- Footer Menu-->
+            <div class="footer_menu">
+              <ul>
+                <li><a href="#">contactame.easypark@gmail.com</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Single Widget-->
+        <div class="col-12 col-sm-6 col-lg">
+          <div class="single-footer-widget section_padding_0_130">
+            <!-- Widget Title-->
+            <h5 class="widget-title">Contactanos</h5>
+            <!-- Footer Menu-->
+            <div class="footer_menu">
+              <ul>
+                <li><a href="#">Términos &amp; Condiciones</a></li>
+                <li><a href="#">Centro de Ayuda</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+ </body>
+
+</html>
