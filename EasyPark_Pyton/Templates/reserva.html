@@ -11,54 +11,109 @@
     <h3 class="indigo-text">Reservar Parqueadero</h3>
     <br></br>
   </center>
+  <center>
   <div class="container-fluid">
     <div class="row">
-
-      <form action="" class="col s12 needs-validation" method="post" novalidate>
-        {% csrf_token %}
-        <div class="row">
-          <div class="input-field col col-sm-12">
-            <select class="form-control text-center" class="validate" style="font-family:arial;" name="tipo_reserva"
-              id="">
-              <option value="" disabled selected>Seleccione tipo de reserva</option>
-              <option value="Hora">Reserva por hora</option>
-              <option value="dia">Reserva por dia</option>
-              <option value="mes">Reserva por mes</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col col-sm-12">
-            <label for="first_name">Placa del vehiculo</label>
-            <input id="first_name" type="text" class="validate" required name="placa_veh" maxlength="7">
-            <div class="invalid-feedback">
-              Falta este dato!!
+        <button class="btn btn-small waves-effect indigo text-white" onclick="showFormOptions()">Iniciar Reserva</button>
+    </div>
+    <div class="row" id="formulario_reserva" style="display: none;">
+        <form action="" class="col s12 needs-validation" method="post" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="input-field col s12">
+                    <select class="form-control text-center validate" style="font-family:arial;" name="tipo_reserva"
+                        id="id_tipo_reserva" onchange="showOptions(this.value)">
+                        <option value="" disabled selected>Seleccione tipo de reserva</option>
+                        <option value="Hora">Reserva por hora</option>
+                        <option value="dia">Reserva por día</option>
+                        <option value="mes">Reserva por mes</option>
+                    </select>
+                </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="input-field col col-sm-12 ">
-              <label for="first_name">Tiempo de reserva</label>
-              <input id="first_name" type="number" class="validate" name="cantidad_reserva" required>
-              <div class="invalid-feedback">
-                Falta este dato!!
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <h6 class="indigo-text">Placa de vehiculo</h6>
+                    <input id="first_name" type="text" class="validate d-inline" required name="placa_veh" maxlength="6">
+                    <div class="invalid-feedback">
+                        Falta este dato!!
+                    </div>
+                </div>
+                    <div class="input-field col s12 m6">
+                        <h6 class="indigo-text">Cantidad de reserva</h6>
+                        <input id="cantidad_reserva" type="number" class="validate d-inline" name="cantidad_reserva" min="0">
+                        <p id="error_cantidad_reserva" style="color: red;"></p>
+                    </div>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <h6 class="indigo-text">Dia y mes de inicio</h6>
+                    <input id="fecha_inicio" type="date" class="validate" name="dia_mes_reserva">
+                </div>
+                <div class="input-field col s12 m6">
+                    <h6 class="indigo-text">hora de reserva</h6>
+                    <input id="cantidad_reserva" type="time" class="validate" name="hora_reserva">
+                </div>
+              <div class="row">
+                <div class="input-field col col-sm-6 offset-sm-3" style="flex-basis: 48%;">
+                  <select class="form-control text-center" class="validate" style="font-family:arial;"           name="tipo_de_vehiculo"
+                  id="tipo_de_vehiculo">
+                    <option value="" disabled selected>Seleccione tipo de vehiculo</option>
+                    <option value="Motocicleta">Motocicleta</option>
+                    <option value="Carro">Carro</option>
+                  </select>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="input-field col col-sm-2 mx-auto d-block">
-              <button type="submit" class='col btn btn-small waves-effect indigo text-white '>Reservar</button>
             </div>
-            {% if messages %}
-            {% for mensaje in messages %}
-            <h2 style="color:rgb(80, 142, 224); text-align: center; box-shadow: inset;">{{mensaje}}</h2>
-            {% endfor %}
-            {% endif %}
-          </div>
-      </form>
+            <div class="row">
+                <div class="input-field col col-sm-2 mx-auto d-block">
+                    <button type="submit" class='col btn btn-small waves-effect indigo text-white'>Reservar</button>
+                </div>
+                {% if messages %}
+                {% for mensaje in messages %}
+                <h2 style="color:rgb(80, 142, 224); text-align: center; box-shadow: inset;">{{mensaje}}</h2>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </form>
     </div>
-  </div>
 </div>
+</center>
 </div>
+<script>
+    var today = new Date().toISOString().split('T')[0];
+    var inputFechaInicio = document.getElementById("fecha_inicio");
+    inputFechaInicio.setAttribute("min", today);
+</script>
+<script>
+    document.getElementById('cantidad_reserva').addEventListener('input', function() {
+        var cantidadReserva = parseInt(this.value);
+        var errorMensaje = '';
+
+        if (cantidadReserva < 0) {
+            errorMensaje = 'La cantidad de reserva no puede ser un número negativo.';
+        }
+
+        document.getElementById('error_cantidad_reserva').textContent = errorMensaje;
+    });
+</script>
+<script>
+  function showFormOptions() {
+        var formularioReserva = document.getElementById("formulario_reserva");
+        formularioReserva.style.display = "block";
+    }
+
+    function showOptions(value) {
+        var inicioReservaMes = document.getElementById("inicio_reserva_mes");
+        var tipoDeVehiculo = document.getElementById("tipo_de_vehiculo");
+
+        if (value === "mes") {
+            inicioReservaMes.style.display = "flex";
+            tipoDeVehiculo.style.display = "flex";
+        } else {
+            inicioReservaMes.style.display = "none";
+            tipoDeVehiculo.style.display = "none";
+        }
+    }
+</script>
 </section>
 {%endblock%}
 {%block scripts%}

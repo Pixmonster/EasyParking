@@ -56,7 +56,10 @@ class Estado(models.Model):
 class Reserva(models.Model):
     tipo_reserva=models.CharField(max_length=6)
     placa_veh=models.CharField(max_length=6)
+    dia_mes_reserva=models.CharField(max_length=50)
+    hora_reserva = models.CharField(max_length=50)
     cantidad_reserva=models.IntegerField()
+    tipo_de_vehiculo=models.CharField(max_length=50)
     fecha_hora = models.DateTimeField('fecha de reserva', auto_now=True, auto_now_add=False)
     id_usuario_fk = models.ForeignKey(Usuario, null=False, blank=False,on_delete=models.CASCADE)
     id_parqueadero_fk = models.ForeignKey(Parqueadero, null=False, blank=False,on_delete=models.CASCADE)

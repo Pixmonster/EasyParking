@@ -315,21 +315,27 @@ def actualizarparqueadero(request):
 
 def reservaparqueadero(request):
     id_parqueadero = int(request.GET.get('id'))
-    if request.method=="POST":
-         if request.POST.get('tipo_reserva') and request.POST.get('placa_veh') and request.POST.get('cantidad_reserva'):
-            reservas=Reserva()
-            reservas.tipo_reserva=request.POST.get('tipo_reserva')
-            reservas.placa_veh=request.POST.get('placa_veh')
-            reservas.cantidad_reserva=request.POST.get('cantidad_reserva')
-            #reservas.save()
-            insertar=connection.cursor()
-            insertar.callproc("reservarparqueadero", [reservas.tipo_reserva,reservas.placa_veh,reservas.cantidad_reserva,request.user.id,id_parqueadero])
+    
+    if request.method == "POST":
+            tipo_reserva = request.POST.get('tipo_reserva')
+            placa_veh = request.POST.get('placa_veh')
+            dia_mes_reserva = request.POST.get('dia_mes_reserva')
+            hora_reserva = request.POST.get('hora_reserva')
+            cantidad_reserva = request.POST.get('cantidad_reserva')
+            tipo_de_vehiculo = request.POST.get('tipo_de_vehiculo')
+
+            
+            reserva = Reserva(tipo_reserva=tipo_reserva, placa_veh=placa_veh, dia_mes_reserva=dia_mes_reserva, hora_reserva=hora_reserva,cantidad_reserva=cantidad_reserva,tipo_de_vehiculo=tipo_de_vehiculo)
+            
+            insertar = connection.cursor()
+            insertar.callproc("reservarparqueadero", [reserva.tipo_reserva, reserva.placa_veh,reserva.dia_mes_reserva,reserva.hora_reserva,reserva.cantidad_reserva,reserva.tipo_de_vehiculo, request.user.id, id_parqueadero])
             insertar.close()
-            messages.success(request, "Has hecho la reserva con exito")
+
             return redirect('../misreservas.html')
     
     else:
-        return render(request,'reserva.html')
+        return render(request, 'reserva.html')
+
     
 def terminarreserva(request):
     id_reserva=int(request.GET.get('id'))
